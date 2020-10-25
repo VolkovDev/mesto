@@ -1,4 +1,5 @@
 .cards {
+  margin: 0 auto;
   width: calc(100% - 400px);
   padding-top: 36px;
   display: grid;

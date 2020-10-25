@@ -1,7 +1,6 @@
 @import url(../vendor/normalize.css);
 @import url(../vendor/fonts/fonts.css);
 @import url(../blocks/page/page.css);
-@import url(../blocks/page/_position/page_position_center.css);
 
 /* Шапка блок header */
 @import url(../blocks/header/header.css);

@@ -1,4 +1,5 @@
 .profile {
+  margin: 0 auto;
   width: calc(100% - 31%);
   min-height: 120px;
   padding-top: 22px;
