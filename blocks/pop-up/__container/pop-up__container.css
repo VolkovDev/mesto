@@ -1,0 +1,12 @@
+.pop-up__container {
+  max-width: 465px;
+  flex-basis: 430px;
+  position: relative;
+  padding: 0 40px;
+}
+
+@media screen and (max-width: 420px) {
+  .pop-up__container {
+    padding: 0px 19px;
+  }
+}

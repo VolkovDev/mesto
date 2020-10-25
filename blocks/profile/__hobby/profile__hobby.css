@@ -1,0 +1,38 @@
+.profile__hobby {
+  margin: 0;
+  padding: 0;
+  max-width: 550px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: -1;
+  align-self: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__hobby {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    justify-self: center;
+    margin-bottom: 36px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .profile__hobby {
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+}
