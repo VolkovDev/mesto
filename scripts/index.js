@@ -1,9 +1,9 @@
 const popUp = document.querySelector('.pop-up')
 const popUpBtnClose = document.querySelector('.pop-up__btn-close')
-const form = document.querySelector('.form')
-const formName = document.querySelector('.form__name')
-const formHobby = document.querySelector('.form__hobby')
-const formBtnSubmit = document.querySelector('.form__btn-submit')
+const form = document.querySelector('.pop-up__form')
+const formName = document.querySelector('.pop-up__form-input_type_name')
+const formHobby = document.querySelector('.pop-up__form-input_type_hobby')
+const formBtnSubmit = document.querySelector('.pop-up__form-btn-submit')
 const profileName = document.querySelector('.profile__name')
 const profileHobby = document.querySelector('.profile__hobby')
 const profileEditBtn = document.querySelector('.profile__edit-button')
@@ -20,13 +20,9 @@ function openPopUp() {
   setProfileData()
 }
 
-profileEditBtn.addEventListener('click', openPopUp)
-
 function closePopUp() {
   popUp.classList.remove("pop-up_opened") 
 }
-
-popUpBtnClose.addEventListener('click', closePopUp)
 
 function setFormSubmitData(e) {
   e.preventDefault()
@@ -35,4 +31,6 @@ function setFormSubmitData(e) {
   closePopUp()
 }
 
+profileEditBtn.addEventListener('click', openPopUp)
+popUpBtnClose.addEventListener('click', closePopUp)
 form.addEventListener('submit', setFormSubmitData)

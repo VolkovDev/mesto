@@ -9,6 +9,7 @@
   cursor: pointer;
   border: none;
   position: absolute;
+  outline: none;
   top: -33px;
   right: 7px;
   transition: opacity .42s ease;

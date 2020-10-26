@@ -1,8 +1,6 @@
-.form__name {
+.pop-up__form-input_type_name {
   padding: 0;
-  margin: 0;
   margin: 0 8.3%;
-  height: 27px;
   margin-bottom: 30px;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, .2);

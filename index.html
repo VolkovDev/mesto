@@ -1,96 +1,97 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang='ru'>
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="keywords" content="HTML, CSS, Grid, JavaScript" />
-  <meta name="author" content="Volkov Andrey" />
-  <link rel="stylesheet" href="./pages/index.css" />
-  <link rel="shortcut icon" href="./images/mesto_favicon.gif" type="image/x-icon" />
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <meta name='keywords' content='HTML, CSS, Grid, JavaScript' />
+  <meta name='author' content='Volkov Andrey' />
+  <link rel='stylesheet' href='./pages/index.css' />
+  <link rel='shortcut icon' href='./images/mesto_favicon.gif' type='image/x-icon' />
   <title>Mesto</title>
 </head>
 
 <body>
-  <div class="page">
+  <div class='page'>
 
-    <header class="header">
-      <a href="#" class="header__link"><img src="./images/logo_mesto.svg" alt="логотип" class="header__logo"></a>
+    <header class='header'>
+      <a href='#' class='header__link'><img src='./images/logo_mesto.svg' alt='логотип' class='header__logo'></a>
     </header>
 
-    <main class="content">
-      <section class="profile">
-        <div class="profile__avatar"></div>
-        <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button"></button>
-        </div>
-        <p class="profile__hobby">Исследователь океана</p>
+    <main class='content'>
 
-        <button class="profile__add-button"></button>
+      <section class='profile'>
+        <div class='profile__avatar'></div>
+        <div class='profile__info'>
+          <h1 class='profile__name'>Жак-Ив Кусто</h1>
+          <button class='profile__edit-button' type='button'></button>
+        </div>
+        <p class='profile__hobby'>Исследователь океана</p>
+        <button class='profile__add-button' type='button'></button>
       </section>
-      <section class="cards">
-        <article class="card">
-          <img src="./images/karachaevo.jpg" alt="Карачаевск" class="card__image">
-          <div class="card__element">
-            <h3 class="card__title">Карачаевск</h3>
-            <button class="card__like-btn"></button>
+
+      <section class='cards'>
+        <article class='card'>
+          <img src='./images/karachaevo.jpg' alt='Карачаевск' class='card__image'>
+          <div class='card__element'>
+            <h3 class='card__title'>Карачаевск</h3>
+            <button class='card__like-btn' type='button'></button>
           </div>
         </article>
-        <article class="card">
-          <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="card__image">
-          <div class="card__element">
-            <h3 class="card__title">Гора Эльбрус</h3>
-            <button class="card__like-btn"></button>
+        <article class='card'>
+          <img src='./images/elbrus.jpg' alt='Гора Эльбрус' class='card__image'>
+          <div class='card__element'>
+            <h3 class='card__title'>Гора Эльбрус</h3>
+            <button class='card__like-btn' type='button'></button>
           </div>
         </article>
-        <article class="card">
-          <img src="./images/dombai.jpg" alt="Домбай" class="card__image">
-          <div class="card__element">
-            <h3 class="card__title">Домбай</h3>
-            <button class="card__like-btn"></button>
+        <article class='card'>
+          <img src='./images/dombai.jpg' alt='Домбай' class='card__image'>
+          <div class='card__element'>
+            <h3 class='card__title'>Домбай</h3>
+            <button class='card__like-btn' type='button'></button>
           </div>
         </article>
-        <article class="card">
-          <img src="./images/karachaevo.jpg" alt="Карачаевск" class="card__image">
-          <div class="card__element">
-            <h3 class="card__title">Карачаевск</h3>
-            <button class="card__like-btn"></button>
+        <article class='card'>
+          <img src='./images/karachaevo.jpg' alt='Карачаевск' class='card__image'>
+          <div class='card__element'>
+            <h3 class='card__title'>Карачаевск</h3>
+            <button class='card__like-btn' type='button'></button>
           </div>
         </article>
-        <article class="card">
-          <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="card__image">
-          <div class="card__element">
-            <h3 class="card__title">Гора Эльбрус</h3>
-            <button class="card__like-btn"></button>
+        <article class='card'>
+          <img src='./images/elbrus.jpg' alt='Гора Эльбрус' class='card__image'>
+          <div class='card__element'>
+            <h3 class='card__title'>Гора Эльбрус</h3>
+            <button class='card__like-btn' type='button'></button>
           </div>
         </article>
-        <article class="card">
-          <img src="./images/dombai.jpg" alt="Домбай" class="card__image">
-          <div class="card__element">
-            <h3 class="card__title">Домбай</h3>
-            <button class="card__like-btn"></button>
+        <article class='card'>
+          <img src='./images/dombai.jpg' alt='Домбай' class='card__image'>
+          <div class='card__element'>
+            <h3 class='card__title'>Домбай</h3>
+            <button class='card__like-btn' type='button'></button>
           </div>
         </article>
       </section>
     </main>
 
-    <footer class="footer">
-      <a href="#" class="footer__link">&copy; 2020 Mesto Russia</a>
+    <footer class='footer'>
+      <a href='#' class='footer__link'>&copy; 2020 Mesto Russia</a>
     </footer>
-    <div class="pop-up">
-      <div class="pop-up__container">
-        <button type="button" class="pop-up__btn-close" aria-label="Закрыть форму"></button>
-        <form name="form-add-profile" action="#" class="form" method="POST">
-          <h3 class="form__title">Редактировать профиль</h3>
-          <input name="input-name" type="text" value="" class="form__name" placeholder="Имя Фамилия" required>
-          <input name="input-hobby" type="text" value='' class="form__hobby" placeholder="Хобби" required>
-          <button class="form__btn-submit" type="submit">Сохранить</button>
+    <div class='pop-up'>
+      <div class='pop-up__container'>
+        <button class='pop-up__btn-close' type='button' aria-label='Закрыть форму'></button>
+        <form name='form-add-profile' action='#' class='pop-up__form' method='POST'>
+          <h3 class='pop-up__form-title'>Редактировать профиль</h3>
+          <input name='input-name' type='text' value='' class='pop-up__form-input pop-up__form-input_type_name' placeholder='Имя Фамилия' required>
+          <input name='input-hobby' type='text' value='' class='pop-up__form-input pop-up__form-input_type_hobby' placeholder='Хобби' required>
+          <button class='pop-up__form-btn-submit' type='submit'>Сохранить</button>
         </form>
       </div>
     </div>
   </div>
-  <script src="./scripts/index.js"></script>
+  <script src='./scripts/index.js'></script>
 </body>
 
 </html>

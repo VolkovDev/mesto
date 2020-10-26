@@ -1,7 +1,7 @@
-.form__btn-submit {
-  width: 358px;
+.pop-up__form-btn-submit {
+  max-width: 358px;
   margin: 0 8.3%;
-  height: 50px;
+  min-height: 50px;
   background: #000;
   color: #FFF;
   padding: 0;
@@ -14,14 +14,15 @@
   text-align: center;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  outline: none;
 }
 
-.form__btn-submit:hover {
+.pop-up__form-btn-submit:hover {
   background: rgba(0, 0, 0, 0.8);
 }
 
 @media screen and (max-width: 425px) {
-  .form__btn-submit {
+  .pop-up__form-btn-submit {
     width: 90%;
     margin: 0 auto;
   }

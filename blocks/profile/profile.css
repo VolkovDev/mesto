@@ -2,10 +2,10 @@
   margin: 0 auto;
   width: calc(100% - 31%);
   min-height: 120px;
-  padding-top: 22px;
+  padding-top: 40px;
   display: grid;
   grid-template-columns: 150px max-content 1fr;
-  grid-template-rows: 75px 75px;
+  grid-template-rows: 60px 60px;
 }
 
 @media screen and (max-width: 1275px) {

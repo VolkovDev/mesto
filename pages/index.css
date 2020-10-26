@@ -1,5 +1,5 @@
 @import url(../vendor/normalize.css);
-@import url(../vendor/fonts/fonts.css);
+@import url(../vendor/fonts/stylesheet.css);
 @import url(../blocks/page/page.css);
 
 /* Шапка блок header */
@@ -39,13 +39,11 @@
 @import url(../blocks/pop-up/__container/pop-up__container.css);
 @import url(../blocks/pop-up/__btn-close/pop-up__btn-close.css);
 @import url(../blocks/pop-up/_opened/pop-up_opened.css);
-
-/* Блок form */
-@import url(../blocks/form/form.css);
-@import url(../blocks/form/__title.css/form__title.css);
-@import url(../blocks/form/__name/form__name.css);
-@import url(../blocks/form/__hobby/form__hobby.css);
-@import url(../blocks/form/__btn-submit/form__btn-submit.css);
-/* @import url(../blocks/form/form.css); */
+@import url(../blocks/pop-up/__form/pop-up__form.css);
+@import url(../blocks/pop-up/__form-title/pop-up__form-title.css);
+@import url(../blocks/pop-up/__form-input/pop-up__form-input.css);
+@import url(../blocks/pop-up/__form-input/_type/pop-up__form-input_type_name.css);
+@import url(../blocks/pop-up/__form-input/_type/pop-up__form-input_type_hobby.css);
+@import url(../blocks/pop-up/__form-btn-submit/pop-up__form-btn-submit.css);
 
 
