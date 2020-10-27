@@ -23,7 +23,7 @@
 
 @media screen and (max-width: 425px) {
   .pop-up__form-btn-submit {
-    width: 90%;
-    margin: 0 auto;
+    margin-right: 22px;
+    margin-left: 22px;
   }
 }

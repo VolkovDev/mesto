@@ -6,10 +6,10 @@
   background-position: center;
   background-size: cover;
   background-color: #fff;
-  transition: opacity .42s, transform .42s ease;
   cursor: pointer;
   outline: none;
   border: none;
+  transition: opacity .42s, transform .42s ease;
 }
 
 .card__like-btn:hover {
