@@ -1,6 +1,6 @@
 .pop-up__form-input {
   display: block;
-  font-family: 'Inter',Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   outline: none;
   border: none;
   font-style: normal;
@@ -19,8 +19,8 @@
 
 @media screen and (max-width: 425px) {
   .pop-up__form-input {
-margin-right: 22px;
-margin-left: 22px;
+    margin-right: 22px;
+    margin-left: 22px;
     font-size: 12px;
     line-height: 1.25;
   }
