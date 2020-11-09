@@ -31,8 +31,9 @@
       </section>
 
       <section class='cards'>
-        <article class='card'>
+        <!-- <article class='card'>
           <img src='./images/karachaevo.jpg' alt='Карачаевск' class='card__image'>
+          <button type="button" class="card__delete-btn"></button>
           <div class='card__element'>
             <h3 class='card__title'>Карачаевск</h3>
             <button class='card__like-btn' type='button'></button>
@@ -72,7 +73,7 @@
             <h3 class='card__title'>Домбай</h3>
             <button class='card__like-btn' type='button'></button>
           </div>
-        </article>
+        </article> -->
       </section>
     </main>
 
@@ -82,15 +83,44 @@
     <div class='pop-up'>
       <div class='pop-up__container'>
         <button class='pop-up__btn-close' type='button' aria-label='Закрыть форму'></button>
-        <form name='form-add-profile' action='#' class='pop-up__form' method='POST'>
+        <form name='form-add-profile' action='#' class='pop-up__form pop-up__form_profile' method='POST'>
           <h3 class='pop-up__form-title'>Редактировать профиль</h3>
-          <input name='input-name' type='text' value='' class='pop-up__form-input pop-up__form-input_type_name' placeholder='Имя Фамилия' required>
-          <input name='input-hobby' type='text' value='' class='pop-up__form-input pop-up__form-input_type_hobby' placeholder='Хобби' required>
+          <input name='input-name' type='text' value='' class='pop-up__form-input pop-up__form-input_type_name'
+            placeholder='Имя Фамилия' required>
+          <input name='input-hobby' type='text' value='' class='pop-up__form-input pop-up__form-input_type_hobby'
+            placeholder='Хобби' required>
           <button class='pop-up__form-btn-submit' type='submit'>Сохранить</button>
+        </form>
+
+        <form name='form-add-image' action='#' class='pop-up__form pop-up__form_image' method='POST'>
+          <h3 class='pop-up__form-title'>Новое место</h3>
+          <input name='input-name-image' type='text' value='' class='pop-up__form-input pop-up__form-input_type_image'
+            placeholder='Название' required>
+          <input name='input-url' type='url' value='' class='pop-up__form-input pop-up__form-input_type_url'
+            placeholder='Ссылка на картинку' required>
+          <button class='pop-up__form-btn-submit pop-up__form-btn-submit_card' type='submit'>Создать</button>
         </form>
       </div>
     </div>
+    <div class='pop-up-image'>
+        <figure class='pop-up-image__container'>
+          <button class='pop-up-image__btn-close' type='button' aria-label='Закрыть форму'></button>
+          <img src='' class='pop-up-image__img' alt="Изображение карточки">
+          <figcaption class="pop-up-image__description">Дай пять, топ-вэб-разработчик</figcaption>
+        </figure>
+    </div>
   </div>
+  <template id="addCard">
+    <article class='card'>
+      <img src='' alt='' class='card__image'>
+      <button type="button" class="card__delete-btn"></button>
+      <div class='card__element'>
+        <h3 class='card__title'></h3>
+        <button class='card__like-btn' type='button'></button>
+      </div>
+    </article>
+  </template>
+  <script src="./scripts/initialCards.js"></script>
   <script src='./scripts/index.js'></script>
 </body>
 
