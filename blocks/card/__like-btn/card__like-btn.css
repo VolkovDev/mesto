@@ -2,6 +2,7 @@
   width: 20px;
   height: 18px;
   padding: 0;
+  margin: 0;
   background-image: url(../../../images/card_like_btn.svg);
   background-position: center;
   background-size: cover;
@@ -9,7 +10,7 @@
   cursor: pointer;
   outline: none;
   border: none;
-  transition: opacity .42s, transform .42s ease;
+  transition: all .42s ease-in-out;
 }
 
 .card__like-btn:hover {

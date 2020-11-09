@@ -13,6 +13,12 @@
   overflow: hidden;
 }
 
+@media screen and (max-width: 969px) {
+  .profile__name {
+    max-width: 350px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .profile__name {
     grid-column-start: 1;
