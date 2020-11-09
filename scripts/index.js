@@ -76,7 +76,9 @@ const deleteCard = (e) => {
 function addCard(link, name) {
   const cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.card__image').src = link;
+  cardElement.querySelector('.card__image').alt = `На фотографии место под названием ${name}`
   cardElement.querySelector('.card__title').textContent = name
+
   cards.prepend(cardElement)
 }
 
