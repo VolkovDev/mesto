@@ -11,9 +11,9 @@
 
 @media screen and (max-width: 425px) {
   .pop-up__btn-close_type_image-zoom {
-    width: 20px;
-    height: 20px;
-    top: -20px;
-    right: -20px;
+    width: 30px;
+    height: 30px;
+    top: -32px;
+    right: -13px;
   }
 }

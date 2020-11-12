@@ -4,9 +4,3 @@
   padding: 0 40px;
   transition: all .42s ease-in-out;
 }
-
-@media screen and (max-width: 420px) {
-  .pop-up__container_opened_add-card {
-    padding: 0px 19px;
-  }
-}
