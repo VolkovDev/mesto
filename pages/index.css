@@ -22,7 +22,6 @@
 
 /* Блок cards */
 @import url(../blocks/cards/cards.css);
-@import url(../blocks/cards/__list/cards__list.css);
 
 /* Блок card */
 @import url(../blocks/card/card.css);
@@ -40,9 +39,23 @@
 
 /* Блок pop-up */
 @import url(../blocks/pop-up/pop-up.css);
+@import url(../blocks/pop-up/_type/pop-up_type_profile.css);
+@import url(../blocks/pop-up/_type/pop-up_type_add-card.css);
+@import url(../blocks/pop-up/_type/pop-up_type_image-zoom.css);
 @import url(../blocks/pop-up/__container/pop-up__container.css);
+@import url(../blocks/pop-up/__img/pop-up__img.css);
+@import url(../blocks/pop-up/__description/pop-up__description.css);
+@import url(../blocks/pop-up/__container/_opened/pop-up__container_opened_profile.css);
+@import url(../blocks/pop-up/__container/_opened/pop-up__container_opened_add-card.css);
 @import url(../blocks/pop-up/__btn-close/pop-up__btn-close.css);
+@import url(../blocks/pop-up/__btn-close/_type/pop-up__btn-close_type_profile.css);
+@import url(../blocks/pop-up/__btn-close/_type/pop-up__btn-close_type_add-card.css);
+@import url(../blocks/pop-up/__btn-close/_type/pop-up__btn-close_type_image-zoom.css);
+@import url(../blocks/pop-up/_type/pop-up_type_profile.css);
+@import url(../blocks/pop-up/_type/pop-up_type_add-card.css);
+@import url(../blocks/pop-up/_type/pop-up_type_image-zoom.css);
 
+/* form элемент блока pop-up*/
 @import url(../blocks/pop-up/__form/pop-up__form.css);
 @import url(../blocks/pop-up/__form-title/pop-up__form-title.css);
 @import url(../blocks/pop-up/__form-input/pop-up__form-input.css);
@@ -51,18 +64,6 @@
 @import url(../blocks/pop-up/__form-input/_type/pop-up__form-input_type_image.css);
 @import url(../blocks/pop-up/__form-input/_type/pop-up__form-input_type_url.css);
 @import url(../blocks/pop-up/__form-btn-submit/pop-up__form-btn-submit.css);
-@import url(../blocks/pop-up/__form-btn-submit/_card/pop-up__form-btn-submit_card.css);
 @import url(../blocks/pop-up/__form/_image/pop-up__form_image.css);
 @import url(../blocks/pop-up/__form/_profile/pop-up__form_profile.css);
 @import url(../blocks/pop-up/_opened/pop-up_opened.css);
-@import url(../blocks/pop-up/__form/_none-active/pop__form_none-active.css);
-
-/* Блок pop-up-img */
-@import url(../blocks/pop-up-image/pop-up-image.css);
-@import url(../blocks/pop-up-image/__container/pop-up-image__container.css);
-@import url(../blocks/pop-up-image/__btn-close/pop-up-image__btn-close.css);
-@import url(../blocks/pop-up-image/__img/pop-up-image__img.css);
-@import url(../blocks/pop-up-image/__description/pop-up-image__description.css);
-@import url(../blocks/pop-up-image/_opened-img/pop-up-image_opened-img.css);
-
-

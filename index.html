@@ -38,9 +38,9 @@
     <footer class='footer'>
       <a href='#' class='footer__link'>&copy; 2020 Mesto Russia</a>
     </footer>
-    <div class='pop-up'>
-      <div class='pop-up__container'>
-        <button class='pop-up__btn-close' type='button' aria-label='Закрыть форму'></button>
+    <div class='pop-up pop-up_type_profile'>
+      <div class='pop-up__container pop-up__container_opened_profile'>
+        <button class='pop-up__btn-close pop-up__btn-close_type_profile' type='button' aria-label='Закрыть форму'></button>
         <form name='form-add-profile' action='#' class='pop-up__form pop-up__form_profile' method='POST'>
           <h3 class='pop-up__form-title'>Редактировать профиль</h3>
           <input name='input-name' type='text' value='' class='pop-up__form-input pop-up__form-input_type_name'
@@ -49,28 +49,34 @@
             placeholder='Хобби' required>
           <button class='pop-up__form-btn-submit' type='submit'>Сохранить</button>
         </form>
-
+      </div>
+    </div>
+    <div class='pop-up pop-up_type_add-card'>
+      <div class='pop-up__container pop-up__container_opened_add-card'>
+        <button class='pop-up__btn-close pop-up__btn-close_type_add-card' type='button' aria-label='Закрыть форму'></button>
         <form name='form-add-image' action='#' class='pop-up__form pop-up__form_image' method='POST'>
           <h3 class='pop-up__form-title'>Новое место</h3>
           <input name='input-name-image' type='text' value='' class='pop-up__form-input pop-up__form-input_type_image'
             placeholder='Название' required>
           <input name='input-url' type='url' value='' class='pop-up__form-input pop-up__form-input_type_url'
             placeholder='Ссылка на картинку' required>
-          <button class='pop-up__form-btn-submit pop-up__form-btn-submit_card' type='submit'>Создать</button>
+          <button class='pop-up__form-btn-submit' type='submit'>Создать</button>
         </form>
       </div>
     </div>
-    <div class='pop-up-image'>
-        <figure class='pop-up-image__container'>
-          <button class='pop-up-image__btn-close' type='button' aria-label='Закрыть форму'></button>
-          <img src='https://sun1-88.userapi.com/impf/c845218/v845218126/3f3ae/hbPTdWC8Nag.jpg?size=640x479&quality=96&proxy=1&sign=997bd3cd7cb5dfa97c0b107b16d60f69' class='pop-up-image__img' alt="Изображение карточки">
-          <figcaption class="pop-up-image__description">Дай пять, топ-вэб-разработчик</figcaption>
-        </figure>
+    <div class='pop-up pop-up_type_image-zoom'>
+      <figure class='pop-up__container pop-up__container_opened_image-zoom'>
+        <button class='pop-up__btn-close pop-up__btn-close_type_image-zoom' type='button' aria-label='Закрыть форму'></button>
+        <img src='#' class='pop-up__img' alt="Изображение карточки">
+        <figcaption class="pop-up__description">Дай пять, топ-вэб-разработчик</figcaption>
+      </figure>
     </div>
   </div>
   <template id="addCard">
     <article class='card'>
-      <img src='https://sun1-88.userapi.com/impf/c845218/v845218126/3f3ae/hbPTdWC8Nag.jpg?size=640x479&quality=96&proxy=1&sign=997bd3cd7cb5dfa97c0b107b16d60f69' alt='Изображение' class='card__image'>
+      <img
+        src='#'
+        alt='Изображение' class='card__image'>
       <button type="button" class="card__delete-btn"></button>
       <div class='card__element'>
         <h3 class='card__title'></h3>

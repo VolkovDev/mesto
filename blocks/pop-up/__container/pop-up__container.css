@@ -1,8 +1,6 @@
 .pop-up__container {
-  max-width: 465px;
-  flex-basis: 430px;
   position: relative;
-  padding: 0 40px;
+  margin: 0;
 }
 
 @media screen and (max-width: 420px) {
