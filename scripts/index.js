@@ -44,20 +44,23 @@ const openPopUpProfile = () => {
 }
 
 // Открытие попап формы добавления карточки
-const openPopUpAddCard = () =>  {
+const openPopUpAddCard = () => {
   openPopUp(popUpAddCard)
   formImageUrl.value = ''
   formImageTitle.value = ''
 }
 
 // Создание карточки из попапа формы добавления карточки
-const addInitialCardForm = (e) =>  {
-  e.preventDefault() 
-  if (e.target.classList.contains('pop-up__form-btn-submit') && (formImageUrl.value != 0 && formImageTitle.value != 0)) {
-    const card = createCard(formImageUrl.value, formImageTitle.value)
-    addCard(card, cards)
-    closePopUp(popUpAddCard)
-  } else if (e.target.classList.contains('pop-up__btn-close_type_add-card')) {
+const addInitialCardForm = (e) => {
+  e.preventDefault()
+  const card = createCard(formImageUrl.value, formImageTitle.value)
+  addCard(card, cards)
+  closePopUp(popUpAddCard)
+}
+
+// Закрытие попапа добавления карточек
+const closePopUpAddCard = (e) => {
+  if (e.target.classList.contains('pop-up__btn-close_type_add-card')) {
     closePopUp(popUpAddCard)
   } else if (e.target.classList.contains('pop-up_type_add-card')) {
     closePopUp(popUpAddCard)
@@ -65,7 +68,7 @@ const addInitialCardForm = (e) =>  {
 }
 
 // Отправка данных формы профиля в профиль 
-const setFormSubmitData = (e) =>  {
+const setFormSubmitData = (e) => {
   e.preventDefault()
   profileName.textContent = formName.value
   profileHobby.textContent = formHobby.value
@@ -73,7 +76,7 @@ const setFormSubmitData = (e) =>  {
 }
 
 //Закрытие попап профиля
-const closeProfile = () =>  {
+const closeProfile = () => {
   closePopUp(popUpProfile)
 }
 
@@ -117,16 +120,21 @@ initialCards.map((el) => {
 })
 
 // Открытие попап с увеличеной картинкой
-const openPopUpImage = (e) => {
+const openPopUpImageZoom = (e) => {
   const popUpImages = e.target.classList.contains('card__image')
   if (popUpImages) {
     popUpImageImg.src = e.target.src
     popUpImageDescription.textContent = e.target.closest('.card').querySelector('.card__title').textContent
     openPopUp(popUpImageZoom)
-  } else if (e.target.classList.contains('pop-up')) {
-    closePopUp(popUpImageZoom)
   }
 }
+
+// Закрытие увеличенной картинки по клику на попап
+// const closePopUpImageZoomClickOnPopUp = (e) => {
+//   if (e.target.classList.contains('pop-up')) {
+//     closePopUp(popUpImageZoom)
+//   }
+// }
 
 // Закрытие попап с увеличеной картинкой
 const popUpImageZoomClose = (e) => {
@@ -155,6 +163,8 @@ popUpProfile.addEventListener('submit', setFormSubmitData)
 profileEditBtn.addEventListener('click', openPopUpProfile)
 popUpProfileBtnClose.addEventListener('click', closeProfile)
 profileAddBtn.addEventListener('click', openPopUpAddCard)
-popUpAddCard.addEventListener('click', addInitialCardForm)
-cards.addEventListener('click', openPopUpImage)
+formImage.addEventListener('submit', addInitialCardForm)
+popUpAddCard.addEventListener('click', closePopUpAddCard)
+cards.addEventListener('click', openPopUpImageZoom)
+// popUpImageZoom.addEventListener('click', closePopUpImageZoomClickOnPopUp)
 popUpImageZoom.addEventListener('click', popUpImageZoomClose)
