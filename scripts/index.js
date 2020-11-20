@@ -21,6 +21,18 @@ const card = document.querySelectorAll('.card')
 const cardImage = document.querySelector('.card__image')
 const cardTemplate = document.querySelector('#addCard').content;
 
+const clearErrors = () => {
+  document.querySelectorAll('.pop-up__form-input-error').forEach((span) => {
+    span.textContent = '';
+  });
+  document.querySelectorAll('.pop-up__form-input').forEach((input) => {
+    input.classList.remove('pop-up__form-input_type_invalid');
+  });
+  document.querySelectorAll('.pop-up__form-btn-submit').forEach((button) => {
+    button.setAttribute('disabled', true);
+  });
+};
+
 // Открытие попап
 const openPopUp = (popup) => {
   popup.classList.add('pop-up_opened')
@@ -29,6 +41,7 @@ const openPopUp = (popup) => {
 // Закрытие попап
 const closePopUp = (popup) => {
   popup.classList.remove('pop-up_opened')
+  clearErrors()
 }
 
 // Установить данные профиля в форму
@@ -80,6 +93,14 @@ const closeProfile = () => {
   closePopUp(popUpProfile)
 }
 
+//Закрытие попап профиля по клику
+const closePopUpProfileClick = (e) => {
+  if (e.target.classList.contains('pop-up_type_profile')) {
+    closePopUp(popUpProfile)
+  }
+}
+
+
 // Смена лайка с активного, на не активный и обратно
 const toggleLikeCard = (e) => {
   e.preventDefault()
@@ -129,13 +150,6 @@ const openPopUpImageZoom = (e) => {
   }
 }
 
-// Закрытие увеличенной картинки по клику на попап
-// const closePopUpImageZoomClickOnPopUp = (e) => {
-//   if (e.target.classList.contains('pop-up')) {
-//     closePopUp(popUpImageZoom)
-//   }
-// }
-
 // Закрытие попап с увеличеной картинкой
 const popUpImageZoomClose = (e) => {
   if (e.target.classList.contains('pop-up__btn-close_type_image-zoom')) {
@@ -146,17 +160,18 @@ const popUpImageZoomClose = (e) => {
 }
 
 // Закрытие попапов по нажатию на клавишу ESC, переделанная функция
-// const closePopUpEcs = (e) => {
-//   if (e.keyCode === 27 && popUpImageZoom.classList.contains('pop-up_opened')) {
-//     closePopUp(popUpImageZoom)
-//   } else if(e.keyCode === 27 && popUpProfile.classList.contains('pop-up_opened')) {
-//     closePopUp(popUpProfile)
-//   } else if(e.keyCode === 27 && popUpAddCard.classList.contains('pop-up_opened')) {
-//     closePopUp(popUpAddCard)
-//   }
-// }
+const closePopUpEcs = (e) => {
+  if (e.keyCode === 27 && popUpImageZoom.classList.contains('pop-up_opened')) {
+    closePopUp(popUpImageZoom)
+  } else if(e.keyCode === 27 && popUpProfile.classList.contains('pop-up_opened')) {
+    closePopUp(popUpProfile)
+  } else if(e.keyCode === 27 && popUpAddCard.classList.contains('pop-up_opened')) {
+    closePopUp(popUpAddCard)
+  }
+  document.removeEventListener('click', closePopUpEcs);
+}
 
-// document.addEventListener('keyup', closePopUpEcs)
+document.addEventListener('keydown', closePopUpEcs)
 cards.addEventListener('click', toggleLikeCard)
 cards.addEventListener('click', deleteCard)
 popUpProfile.addEventListener('submit', setFormSubmitData)
@@ -165,6 +180,6 @@ popUpProfileBtnClose.addEventListener('click', closeProfile)
 profileAddBtn.addEventListener('click', openPopUpAddCard)
 formImage.addEventListener('submit', addInitialCardForm)
 popUpAddCard.addEventListener('click', closePopUpAddCard)
+popUpProfile.addEventListener('click', closePopUpProfileClick)
 cards.addEventListener('click', openPopUpImageZoom)
-// popUpImageZoom.addEventListener('click', closePopUpImageZoomClickOnPopUp)
 popUpImageZoom.addEventListener('click', popUpImageZoomClose)

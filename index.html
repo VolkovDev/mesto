@@ -40,33 +40,51 @@
     </footer>
     <div class='pop-up pop-up_type_profile'>
       <div class='pop-up__container pop-up__container_opened_profile'>
-        <button class='pop-up__btn-close pop-up__btn-close_type_profile' type='button' aria-label='Закрыть форму'></button>
+        <button class='pop-up__btn-close pop-up__btn-close_type_profile' type='button'
+          aria-label='Закрыть форму'></button>
         <form name='form-add-profile' action='#' class='pop-up__form pop-up__form_profile' method='POST'>
           <h3 class='pop-up__form-title'>Редактировать профиль</h3>
-          <input name='input-name' type='text' value='' class='pop-up__form-input pop-up__form-input_type_name'
-            placeholder='Имя Фамилия' required>
-          <input name='input-hobby' type='text' value='' class='pop-up__form-input pop-up__form-input_type_hobby'
-            placeholder='Хобби' required>
+
+          <input name='input-name' type='text' id='name-input' value=''
+            class='pop-up__form-input pop-up__form-input_type_name' placeholder='Имя Фамилия' required minlength='2'
+            maxlength='40' autocomplete="off">
+          <span class='pop-up__form-input-error' id='name-input-error'></span>
+
+          <input name='input-hobby' type='text' id='hobby-input' value=''
+            class='pop-up__form-input pop-up__form-input_type_hobby' placeholder='Хобби' required minlength='2'
+            maxlength='200' autocomplete="off">
+          <span class='pop-up__form-input-error' id='hobby-input-error'></span>
+
           <button class='pop-up__form-btn-submit' type='submit'>Сохранить</button>
+
         </form>
       </div>
     </div>
     <div class='pop-up pop-up_type_add-card'>
       <div class='pop-up__container pop-up__container_opened_add-card'>
-        <button class='pop-up__btn-close pop-up__btn-close_type_add-card' type='button' aria-label='Закрыть форму'></button>
+        <button class='pop-up__btn-close pop-up__btn-close_type_add-card' type='button'
+          aria-label='Закрыть форму'></button>
         <form name='form-add-image' action='#' class='pop-up__form pop-up__form_image' method='POST'>
           <h3 class='pop-up__form-title'>Новое место</h3>
-          <input name='input-name-image' type='text' value='' class='pop-up__form-input pop-up__form-input_type_image'
-            placeholder='Название' required>
-          <input name='input-url' type='url' value='' class='pop-up__form-input pop-up__form-input_type_url'
-            placeholder='Ссылка на картинку' required>
+
+          <input name='input-name-image' type='text' id='name-image-input' value=''
+            class='pop-up__form-input pop-up__form-input_type_image' placeholder='Название' required minlength='2'
+            maxlength='30' autocomplete="off">
+          <span class='pop-up__form-input-error' id='name-image-input-error'></span>
+
+          <input name='input-url' type='url' id='url-input' value=''
+            class='pop-up__form-input pop-up__form-input_type_url' placeholder='Ссылка на картинку' required
+            autocomplete="off">
+          <span class='pop-up__form-input-error' id='url-input-error'></span>
+
           <button class='pop-up__form-btn-submit' type='submit'>Создать</button>
         </form>
       </div>
     </div>
     <div class='pop-up pop-up_type_image-zoom'>
       <figure class='pop-up__container pop-up__container_opened_image-zoom'>
-        <button class='pop-up__btn-close pop-up__btn-close_type_image-zoom' type='button' aria-label='Закрыть форму'></button>
+        <button class='pop-up__btn-close pop-up__btn-close_type_image-zoom' type='button'
+          aria-label='Закрыть форму'></button>
         <img src='#' class='pop-up__img' alt='Изображение карточки'>
         <figcaption class='pop-up__description'>Дай пять, топ-вэб-разработчик</figcaption>
       </figure>
@@ -74,9 +92,7 @@
   </div>
   <template id='addCard'>
     <article class='card'>
-      <img
-        src='#'
-        alt='Изображение' class='card__image'>
+      <img src='#' alt='Изображение' class='card__image'>
       <button type='button' class='card__delete-btn'></button>
       <div class='card__element'>
         <h3 class='card__title'></h3>
@@ -85,6 +101,7 @@
     </article>
   </template>
   <script src='./scripts/initialCards.js'></script>
+  <script src='./scripts/validate.js'></script>
   <script src='./scripts/index.js'></script>
 </body>
 

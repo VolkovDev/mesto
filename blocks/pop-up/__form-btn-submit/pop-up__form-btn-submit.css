@@ -1,6 +1,7 @@
 .pop-up__form-btn-submit {
   max-width: 358px;
   margin: 0 8.3%;
+  margin-top: 48px;
   min-height: 50px;
   background: #000;
   color: #FFF;
@@ -19,6 +20,10 @@
 
 .pop-up__form-btn-submit:hover {
   background: rgba(0, 0, 0, 0.8);
+}
+
+.pop-up__form-btn-submit:disabled {
+  background-color: transparent;
 }
 
 @media screen and (max-width: 425px) {
