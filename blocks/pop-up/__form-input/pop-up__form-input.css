@@ -7,7 +7,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 1.2;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
   padding-bottom: 13px;
   margin: 0 8.3%;
 }
@@ -23,4 +23,10 @@
     font-size: 12px;
     line-height: 1.25;
   }
+}
+
+.pop-up__form-input:focus {
+  border: 3px solid rgba(16, 152, 206, .8);
+  box-shadow: 0 0 7px rgba(16, 152, 206, .8);
+  border-radius: 5px;
 }
