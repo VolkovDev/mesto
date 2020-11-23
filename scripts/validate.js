@@ -29,48 +29,32 @@ const toggleButtonState = (buttonElement, isActive, custom) => {
     buttonElement.disabled = false
   } else {
     buttonElement.classList.add(custom.inactiveButtonClass)
-    buttonElement.disabled = true 
+    buttonElement.disabled = true
   }
 }
 
 // Установка слушателей для всем элементов инпут
-const setEventListeners = (formElement, custom) => {
+const setEventListeners = (formElement, custom, submitButton) => {
   const inputList = Array.from(formElement.querySelectorAll(custom.inputSelector))
-  const submitButton = formElement.querySelector(custom.submitButtonSelector)
-
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement, custom)
       toggleButtonState(submitButton, formElement.checkValidity(), custom)
     })
   })
-
-  // inputList.forEach((inputElement) => {
-  //   inputElement.addEventListener('change', () => {
-  //     console.log('метод change работает')
-  //     checkInputValidity(formElement, inputElement, custom)
-  //     toggleButtonState(submitButton, formElement.checkValidity(), custom)
-  //   })
-  // })
 }
 
 const enableValidation = (custom) => {
   const formList = Array.from(document.querySelectorAll(custom.formSelector))
   formList.forEach((formElement) => {
-    setEventListeners(formElement, custom)
-
+    const submitButton = formElement.querySelector(custom.submitButtonSelector)
+    setEventListeners(formElement, custom, submitButton)
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault()
     })
-    const inputList = Array.from(formElement.querySelectorAll(custom.inputSelector))
-    inputList.forEach((inputElement) => {
-      setEventListeners(inputElement, custom)
-    })
-    const submitButton = formElement.querySelector(custom.submitButtonSelector)
     toggleButtonState(submitButton, formElement.checkValidity(), custom)
   })
 }
-
 
 const validationCustom = {
   formSelector: '.pop-up__form',
@@ -79,6 +63,6 @@ const validationCustom = {
   inactiveButtonClass: 'pop-up__form-btn-submit_disabled',
   // inputErrorClass: 'pop-up__form-input-error',
   errorClass: 'pop-up__form-input_type_invalid'
-} 
+}
 
 enableValidation(validationCustom)
