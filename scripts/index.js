@@ -1,7 +1,7 @@
+const popUp = document.querySelectorAll('.pop-up')
 const popUpProfile = document.querySelector('.pop-up_type_profile')
 const popUpAddCard = document.querySelector('.pop-up_type_add-card')
 const popUpImageZoom = document.querySelector('.pop-up_type_image-zoom')
-const popUpProfileBtnClose = document.querySelector('.pop-up__btn-close_type_profile')
 const formImage = document.querySelector('.pop-up__form_image')
 const formName = document.querySelector('.pop-up__form-input_type_name')
 const formHobby = document.querySelector('.pop-up__form-input_type_hobby')
@@ -14,19 +14,19 @@ const profileHobby = document.querySelector('.profile__hobby')
 const profileEditBtn = document.querySelector('.profile__edit-button')
 const profileAddBtn = document.querySelector('.profile__add-button')
 const cards = document.querySelector('.cards')
-const cardTemplate = document.querySelector('#addCard').content;
+const cardTemplate = document.querySelector('#addCard').content
 
 const clearErrors = (popup) => {
   popup.querySelectorAll('.pop-up__form-input-error').forEach((span) => {
-    span.textContent = '';
-  });
+    span.textContent = ''
+  })
   popup.querySelectorAll('.pop-up__form-input').forEach((input) => {
-    input.classList.remove('pop-up__form-input_type_invalid');
-  });
+    input.classList.remove('pop-up__form-input_type_invalid')
+  })
   popup.querySelectorAll('.pop-up__form-btn-submit').forEach((button) => {
-    button.setAttribute('disabled', true);
-  });
-};
+    button.setAttribute('disabled', true)
+  })
+}
 
 // Открытие попап
 const openPopUp = (popup) => {
@@ -35,10 +35,13 @@ const openPopUp = (popup) => {
 }
 
 // Закрытие попап
-const closePopUp = (popup) => {
-  popup.classList.remove('pop-up_opened')
-  document.removeEventListener('click', closePopUpEsc);
-  
+const closePopUp = (popUp) => {
+  popUp.forEach((popup) => {
+    if (popup.classList.contains('pop-up_opened'))
+      console.log('Сработала функция закрытия попап')
+    popup.classList.remove('pop-up_opened')
+    document.removeEventListener('keydown', closePopUpEsc)
+  })
 }
 
 // Установить данные профиля в форму
@@ -47,17 +50,17 @@ const setProfileData = () => {
   formHobby.value = profileHobby.textContent
 }
 
-// Отправка данных формы профиля в профиль 
+// Установка данных формы профиля в профиль 
 const setFormSubmitData = (e) => {
-  // e.preventDefault()
   profileName.textContent = formName.value
   profileHobby.textContent = formHobby.value
-  closePopUp(popUpProfile)
+  closePopUp(popUp)
 }
 
 // Открытие попап формы редактирования профиля и добавить в него данные профиля
 const openPopUpProfile = () => {
   setProfileData()
+  clearErrors(popUpProfile)
   openPopUp(popUpProfile)
 }
 
@@ -65,90 +68,81 @@ const openPopUpProfile = () => {
 const openPopUpAddCard = () => {
   formImageUrl.value = ''
   formImageTitle.value = ''
+  clearErrors(popUpAddCard)
   openPopUp(popUpAddCard)
 }
 
-// Создание карточки из попапа формы добавления карточки
-const addInitialCardForm = (e) => {
-  // e.preventDefault()
-  const card = createCard(formImageUrl.value, formImageTitle.value)
-  addCard(card, cards)
-  closePopUp(popUpAddCard)
-}
-
 // Закрытие попапа добавления карточек
-const closePopUpAddCard = (e) => {
-  if (e.target.classList.contains('pop-up__btn-close_type_add-card') || e.target.classList.contains('pop-up_type_add-card'))  {
-    closePopUp(popUpAddCard)
-    clearErrors(popUpAddCard)
-  } 
-}
+// const closePopUpAddCard = (e) => {
+//   if (e.target.classList.contains('pop-up__btn-close_type_add-card') || e.target.classList.contains('pop-up_type_add-card'))  {
+//     closePopUp(popUpAddCard)
+//   } 
+// }
 
 //Закрытие попап профиля
-const closePopUpProfile = (e) => {
-  if (e.target.classList.contains('pop-up__btn-close_type_profile') || e.target.classList.contains('pop-up_type_profile')) {
-    closePopUp(popUpProfile)
-    clearErrors(popUpProfile)
-  } 
+// const closePopUpProfile = (e) => {
+//   if (e.target.classList.contains('pop-up__btn-close_type_profile') || e.target.classList.contains('pop-up_type_profile')) {
+//     closePopUp(popUpProfile)
+//   } 
+// }
+
+// Создание карточки из попапа формы добавления карточки
+const addInitialCardForm = (e) => {
+  const card = createCard(formImageUrl.value, formImageTitle.value)
+  addCard(card, cards)
+  closePopUp(popUp)
 }
 
 // Смена лайка с активного, на не активный и обратно
 const toggleLikeCard = (e) => {
-  e.preventDefault()
-  const btnLike = e.target.classList.contains('card__like-btn')
-  if (btnLike) {
-    const like = e.target.parentElement.querySelector('.card__like-btn');
-    like.classList.toggle('card__like-btn_active');
-  }
+  const like = e.target.parentElement.querySelector('.card__like-btn')
+  like.classList.toggle('card__like-btn_active')
 }
 
-//Удаление карточек из дома
+//Удаление карточки из дома
 const deleteCard = (e) => {
-  const btnDeleteCard = e.target.classList.contains('card__delete-btn')
-  if (btnDeleteCard) {
-    e.target.closest('.card').remove()
-  }
+  e.target.closest('.card').remove()
 }
 
 // Открытие попап с увеличеной картинкой
 const openPopUpImageZoom = (e) => {
-  const popUpImages = e.target.classList.contains('card__image')
-  if (popUpImages) {
-    popUpImageImg.src = e.target.src
-    popUpImageDescription.textContent = e.target.closest('.card').querySelector('.card__title').textContent
-    openPopUp(popUpImageZoom)
-  }
+  popUpImageImg.src = e.target.src
+  popUpImageDescription.textContent = e.target.closest('.card').querySelector('.card__title').textContent
+  openPopUp(popUpImageZoom)
 }
 
 // Закрытие попап с увеличеной картинкой
-const closePopUpImageZoom = (e) => {
-  if (e.target.classList.contains('pop-up__btn-close_type_image-zoom')) {
-    closePopUp(popUpImageZoom)
-  } else if (e.target.classList.contains('pop-up_type_image-zoom')) {
-    closePopUp(popUpImageZoom)
+const closePopUpClickByOverlayOrBtn = (e) => {
+  if (e.target.classList.contains('pop-up__btn-close') || e.target.classList.contains('pop-up')) {
+    // popUp.forEach((popup) => {
+    //   if(popup.classList.contains('pop-up_opened'))
+    closePopUp(popUp)
+    // }) 
   }
 }
 
 // Создание карточки из cardTemplate
 const createCard = (link, name) => {
-  const cardElement = cardTemplate.cloneNode(true);
+  const cardElement = cardTemplate.cloneNode(true)
   const cardElementImage = cardElement.querySelector('.card__image')
-  cardElementImage.src = link;
+  const cardElementLikeBtn = cardElement.querySelector('.card__like-btn')
+  const cardElementDeleteBtn = cardElement.querySelector('.card__delete-btn')
+  cardElementImage.src = link
   cardElementImage.alt = `На фотографии место под названием ${name}`
   cardElement.querySelector('.card__title').textContent = name
-  cards.addEventListener('click', toggleLikeCard) 
-  cards.addEventListener('click', openPopUpImageZoom)
+  cardElementLikeBtn.addEventListener('click', toggleLikeCard)
+  cardElementImage.addEventListener('click', openPopUpImageZoom)
+  cardElementDeleteBtn.addEventListener('click', deleteCard)
   return cardElement
 }
 
 // Добавление карточки
 const addCard = (element, elementsList) => {
-  elementsList.prepend(element);
+  elementsList.prepend(element)
 }
 
 //Добавление массива карточек InitialCards
-const addInitialCards = (el, elList) =>
-{
+const addInitialCards = (el, elList) => {
   elList.append(el)
 }
 
@@ -160,22 +154,15 @@ initialCards.map((el) => {
 
 // Закрытие попапов по нажатию на клавишу ESC, переделанная функция
 const closePopUpEsc = (e) => {
-  if (e.key === 'Escape' && popUpImageZoom.classList.contains('pop-up_opened')) { 
-    closePopUp(popUpImageZoom) 
-  } else if(e.key === 'Escape' && popUpProfile.classList.contains('pop-up_opened')) { 
-    closePopUp(popUpProfile) 
-    clearErrors(popUpProfile)
-  } else if(e.key === 'Escape' && popUpAddCard.classList.contains('pop-up_opened')) { 
-    closePopUp(popUpAddCard) 
-    clearErrors(popUpAddCard)
-  } 
+  if (e.key === 'Escape') {
+    closePopUp(popUp)
+  }
 }
 
-cards.addEventListener('click', deleteCard)
 popUpProfile.addEventListener('submit', setFormSubmitData)
 profileEditBtn.addEventListener('click', openPopUpProfile)
 profileAddBtn.addEventListener('click', openPopUpAddCard)
 formImage.addEventListener('submit', addInitialCardForm)
-popUpAddCard.addEventListener('click', closePopUpAddCard)
-popUpProfile.addEventListener('click', closePopUpProfile)
-popUpImageZoom.addEventListener('click', closePopUpImageZoom)
+popUpAddCard.addEventListener('click', closePopUpClickByOverlayOrBtn)
+popUpProfile.addEventListener('click', closePopUpClickByOverlayOrBtn)
+popUpImageZoom.addEventListener('click', closePopUpClickByOverlayOrBtn)
