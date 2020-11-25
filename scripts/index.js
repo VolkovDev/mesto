@@ -1,4 +1,3 @@
-const popUp = document.querySelectorAll('.pop-up')
 const popUpProfile = document.querySelector('.pop-up_type_profile')
 const popUpAddCard = document.querySelector('.pop-up_type_add-card')
 const popUpImageZoom = document.querySelector('.pop-up_type_image-zoom')
@@ -35,13 +34,9 @@ const openPopUp = (popup) => {
 }
 
 // Закрытие попап
-const closePopUp = (popUp) => {
-  popUp.forEach((popup) => {
-    if (popup.classList.contains('pop-up_opened'))
-      console.log('Сработала функция закрытия попап')
-    popup.classList.remove('pop-up_opened')
-    document.removeEventListener('keydown', closePopUpEsc)
-  })
+const closePopUp = (popup) => {
+  popup.classList.remove('pop-up_opened')
+  document.removeEventListener('keydown', closePopUpEsc)
 }
 
 // Установить данные профиля в форму
@@ -54,7 +49,7 @@ const setProfileData = () => {
 const setFormSubmitData = (e) => {
   profileName.textContent = formName.value
   profileHobby.textContent = formHobby.value
-  closePopUp(popUp)
+  closePopUp(popUpProfile)
 }
 
 // Открытие попап формы редактирования профиля и добавить в него данные профиля
@@ -72,25 +67,11 @@ const openPopUpAddCard = () => {
   openPopUp(popUpAddCard)
 }
 
-// Закрытие попапа добавления карточек
-// const closePopUpAddCard = (e) => {
-//   if (e.target.classList.contains('pop-up__btn-close_type_add-card') || e.target.classList.contains('pop-up_type_add-card'))  {
-//     closePopUp(popUpAddCard)
-//   } 
-// }
-
-//Закрытие попап профиля
-// const closePopUpProfile = (e) => {
-//   if (e.target.classList.contains('pop-up__btn-close_type_profile') || e.target.classList.contains('pop-up_type_profile')) {
-//     closePopUp(popUpProfile)
-//   } 
-// }
-
 // Создание карточки из попапа формы добавления карточки
 const addInitialCardForm = (e) => {
   const card = createCard(formImageUrl.value, formImageTitle.value)
   addCard(card, cards)
-  closePopUp(popUp)
+  closePopUp(popUpAddCard)
 }
 
 // Смена лайка с активного, на не активный и обратно
@@ -114,10 +95,8 @@ const openPopUpImageZoom = (e) => {
 // Закрытие попап с увеличеной картинкой
 const closePopUpClickByOverlayOrBtn = (e) => {
   if (e.target.classList.contains('pop-up__btn-close') || e.target.classList.contains('pop-up')) {
-    // popUp.forEach((popup) => {
-    //   if(popup.classList.contains('pop-up_opened'))
-    closePopUp(popUp)
-    // }) 
+    const popUpActive = e.target.closest('.pop-up')
+    closePopUp(popUpActive)
   }
 }
 
@@ -155,7 +134,8 @@ initialCards.map((el) => {
 // Закрытие попапов по нажатию на клавишу ESC, переделанная функция
 const closePopUpEsc = (e) => {
   if (e.key === 'Escape') {
-    closePopUp(popUp)
+    const popUpOpened = document.querySelector('.pop-up_opened')
+    closePopUp(popUpOpened)
   }
 }
 
