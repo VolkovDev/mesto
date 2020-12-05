@@ -1,3 +1,7 @@
+import { Card } from './Card.js'
+import { FormValidator } from './FormValidator.js'
+import { initialCards } from './initialCards.js'
+
 const popUpProfile = document.querySelector('.pop-up_type_profile')
 const popUpAddCard = document.querySelector('.pop-up_type_add-card')
 const popUpImageZoom = document.querySelector('.pop-up_type_image-zoom')
@@ -13,8 +17,25 @@ const profileHobby = document.querySelector('.profile__hobby')
 const profileEditBtn = document.querySelector('.profile__edit-button')
 const profileAddBtn = document.querySelector('.profile__add-button')
 const cards = document.querySelector('.cards')
-const cardTemplate = document.querySelector('#addCard').content
+// const cardTemplate = document.querySelector('#addCard').content
 
+const validationCustom = {
+  formSelector: '.pop-up__form',
+  inputSelector: '.pop-up__form-input',
+  submitButtonSelector: '.pop-up__form-btn-submit',
+  inactiveButtonClass: 'pop-up__form-btn-submit_disabled',
+  errorClass: 'pop-up__form-input_type_invalid'
+}
+
+// Создание класса для проверки на валидность инпута профиля 
+const validationInputProfile = new FormValidator(validationCustom, '.pop-up__form_profile')
+validationInputProfile.enableValidation();
+
+// Создание класса для проверки на валидность инпута формы добавления карточки 
+const validationInputImage = new FormValidator(validationCustom, '.pop-up__form_image')
+validationInputImage.enableValidation();
+
+//Очистка ошибок iput
 const clearErrors = (popup) => {
   popup.querySelectorAll('.pop-up__form-input-error').forEach((span) => {
     span.textContent = ''
@@ -30,13 +51,15 @@ const clearErrors = (popup) => {
 // Открытие попап
 const openPopUp = (popup) => {
   popup.classList.add('pop-up_opened')
-  document.addEventListener('keydown', closePopUpEsc)
+  // document.addEventListener('keydown', closePopUpEsc)
+  // console.log('addListenerOpen')
 }
 
 // Закрытие попап
 const closePopUp = (popup) => {
   popup.classList.remove('pop-up_opened')
-  document.removeEventListener('keydown', closePopUpEsc)
+  // document.removeEventListener('keydown', closePopUpEsc)
+  // console.log('removeListenerOpen')
 }
 
 // Установить данные профиля в форму
@@ -67,31 +90,6 @@ const openPopUpAddCard = () => {
   openPopUp(popUpAddCard)
 }
 
-// Создание карточки из попапа формы добавления карточки
-const addInitialCardForm = (e) => {
-  const card = createCard(formImageUrl.value, formImageTitle.value)
-  addCard(card, cards)
-  closePopUp(popUpAddCard)
-}
-
-// Смена лайка с активного, на не активный и обратно
-const toggleLikeCard = (e) => {
-  const like = e.target.parentElement.querySelector('.card__like-btn')
-  like.classList.toggle('card__like-btn_active')
-}
-
-//Удаление карточки из дома
-const deleteCard = (e) => {
-  e.target.closest('.card').remove()
-}
-
-// Открытие попап с увеличеной картинкой
-const openPopUpImageZoom = (e) => {
-  popUpImageImg.src = e.target.src
-  popUpImageDescription.textContent = e.target.closest('.card').querySelector('.card__title').textContent
-  openPopUp(popUpImageZoom)
-}
-
 // Закрытие попап с увеличеной картинкой
 const closePopUpClickByOverlayOrBtn = (e) => {
   if (e.target.classList.contains('pop-up__btn-close') || e.target.classList.contains('pop-up')) {
@@ -100,35 +98,32 @@ const closePopUpClickByOverlayOrBtn = (e) => {
   }
 }
 
-// Создание карточки из cardTemplate
-const createCard = (link, name) => {
-  const cardElement = cardTemplate.cloneNode(true)
-  const cardElementImage = cardElement.querySelector('.card__image')
-  const cardElementLikeBtn = cardElement.querySelector('.card__like-btn')
-  const cardElementDeleteBtn = cardElement.querySelector('.card__delete-btn')
-  cardElementImage.src = link
-  cardElementImage.alt = `На фотографии место под названием ${name}`
-  cardElement.querySelector('.card__title').textContent = name
-  cardElementLikeBtn.addEventListener('click', toggleLikeCard)
-  cardElementImage.addEventListener('click', openPopUpImageZoom)
-  cardElementDeleteBtn.addEventListener('click', deleteCard)
-  return cardElement
+// Создание карточки из попапа формы добавления карточки
+const addInitialCardForm = (e) => {
+  const data = {}
+  data.name = document.querySelector(".pop-up__form-input_type_image").value;
+  data.link = document.querySelector(".pop-up__form-input_type_url").value;
+  const card = new Card(data, '#addCard')
+  const cardElement = card.generateCard()
+  addCard(cardElement, cards)
+  closePopUp(popUpAddCard)
 }
 
-// Добавление карточки
-const addCard = (element, elementsList) => {
-  elementsList.prepend(element)
+// // Добавление карточки
+const addCard = (el, elList) => {
+  elList.prepend(el)
 }
 
-//Добавление массива карточек InitialCards
+// //Добавление массива карточек InitialCards
 const addInitialCards = (el, elList) => {
   elList.append(el)
 }
 
-//Добавление карточек в дом  из массива initialCards
+// //Добавление карточек в дом  из массива initialCards
 initialCards.map((el) => {
-  const card = createCard(el.link, el.name)
-  addInitialCards(card, cards)
+  const card = new Card(el, '#addCard')
+  const cardElement = card.generateCard()
+  addInitialCards(cardElement, cards)
 })
 
 // Закрытие попапов по нажатию на клавишу ESC, переделанная функция
@@ -139,6 +134,7 @@ const closePopUpEsc = (e) => {
   }
 }
 
+document.addEventListener('keydown', closePopUpEsc)
 popUpProfile.addEventListener('submit', setFormSubmitData)
 profileEditBtn.addEventListener('click', openPopUpProfile)
 profileAddBtn.addEventListener('click', openPopUpAddCard)
@@ -146,3 +142,5 @@ formImage.addEventListener('submit', addInitialCardForm)
 popUpAddCard.addEventListener('click', closePopUpClickByOverlayOrBtn)
 popUpProfile.addEventListener('click', closePopUpClickByOverlayOrBtn)
 popUpImageZoom.addEventListener('click', closePopUpClickByOverlayOrBtn)
+
+export { popUpImageImg, popUpImageDescription }
