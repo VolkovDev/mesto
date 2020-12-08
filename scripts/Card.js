@@ -1,4 +1,4 @@
-import {popUpImageImg, popUpImageDescription} from './index.js'
+import { popUpImageImg, popUpImageDescription, popUpImageZoom, closePopUpEsc, closePopUpClickByOverlayOrBtn} from './utils.js'
 
 export class Card {
   constructor(data, cardSelector) {
@@ -13,22 +13,22 @@ export class Card {
       .querySelector(this._cardSelector)
       .content
       .querySelector('.card')
-      .cloneNode(true);
-    return cardElement;
+      .cloneNode(true)
+    return cardElement
   }
 
   // Создание карточки
   generateCard() {
-    this._element = this._getTemplate();
+    this._element = this._getTemplate()
     this._element.querySelector('.card__title').textContent = this._name
     this._element.querySelector('.card__image').src = this._link
     this._elementImage = this._element.querySelector('.card__image')
     this._elementImage.alt = `На фотографии изображение ${this._name}`
     this._elementLikeBtn = this._element.querySelector('.card__like-btn')
     this._elementDeleteBtn = this._element.querySelector('.card__delete-btn')
-    this._setEventListeners();
+    this._setEventListeners()
 
-    return this._element;
+    return this._element
   }
 
   // Добавление слушателей событий
@@ -51,10 +51,12 @@ export class Card {
 
   // Открытие попап изображение карточки
   _openPopup() {
-    this._elementImage.classList.add("pop-up_opened");
-    popUpImageImg.src = this._link;
-    popUpImageDescription.textContent = this._name;
-    document.querySelector('.pop-up_type_image-zoom').classList.add("pop-up_opened");
+    popUpImageImg.src = this._link
+    popUpImageImg.alt = `На фотографии изображение ${this._name}`
+    popUpImageDescription.textContent = this._name
+    popUpImageZoom.classList.add('pop-up_opened')
+    document.addEventListener('keydown', closePopUpEsc)
+    popUpImageZoom.addEventListener('click', closePopUpClickByOverlayOrBtn)
   }
 
 }

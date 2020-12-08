@@ -54,6 +54,19 @@ export class FormValidator {
     })
   }
 
+  //Очистка ошибок iput
+clearErrors = (popup) => {
+  popup.querySelectorAll('.pop-up__form-input-error').forEach((span) => {
+    span.textContent = ''
+  })
+  popup.querySelectorAll('.pop-up__form-input').forEach((input) => {
+    input.classList.remove('pop-up__form-input_type_invalid')
+  })
+  popup.querySelectorAll('.pop-up__form-btn-submit').forEach((button) => {
+    button.setAttribute('disabled', true)
+  })
+}
+
   enableValidation() {
       const formElement = document.querySelector(this._formSelector);
       const submitButton = formElement.querySelector(this._submitButtonSelector)
