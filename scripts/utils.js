@@ -9,18 +9,15 @@ export const popUpProfile = document.querySelector('.pop-up_type_profile')
 export const openPopUp = (popup) => {
   popup.classList.add('pop-up_opened')
   document.addEventListener('keydown', closePopUpEsc)
-  popUpAddCard.addEventListener('click', closePopUpClickByOverlayOrBtn)
-  popUpProfile.addEventListener('click', closePopUpClickByOverlayOrBtn)
-  popUpImageZoom.addEventListener('click', closePopUpClickByOverlayOrBtn)
+  popup.addEventListener('click', closePopUpClickByOverlayOrBtn)
 }
 
 // Закрытие попап
 export const closePopUp = (popup) => {
   popup.classList.remove('pop-up_opened')
   document.removeEventListener('keydown', closePopUpEsc)
-  popUpAddCard.removeEventListener('click', closePopUpClickByOverlayOrBtn)
-  popUpProfile.removeEventListener('click', closePopUpClickByOverlayOrBtn)
-  popUpImageZoom.removeEventListener('click', closePopUpClickByOverlayOrBtn)
+  popup.removeEventListener('click', closePopUpClickByOverlayOrBtn)
+
 }
 
 // Закрытие попапов по нажатию на клавишу ESC, переделанная функция
