@@ -1,4 +1,4 @@
-import { popUpImageImg, popUpImageDescription, popUpImageZoom, closePopUpEsc, closePopUpClickByOverlayOrBtn} from './utils.js'
+import { popUpImageImg, popUpImageDescription, popUpImageZoom, closePopUpEsc, closePopUpClickByOverlayOrBtn} from '../utils/utils.js'
 
 export class Card {
   constructor(data, cardSelector) {
