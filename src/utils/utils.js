@@ -4,6 +4,17 @@ export const popUpImageZoom = document.querySelector('.pop-up_type_image-zoom')
 export const popUpBtnClose = document.querySelector('.pop-up__btn-close_type_image-zoom')
 export const popUpAddCard = document.querySelector('.pop-up_type_add-card')
 export const popUpProfile = document.querySelector('.pop-up_type_profile')
+export const profileName = document.querySelector('.profile__name')
+export const profileHobby = document.querySelector('.profile__hobby')
+
+export const formName = document.querySelector('.pop-up__form-input_type_name')
+export const formHobby = document.querySelector('.pop-up__form-input_type_hobby')
+
+export const formImageTitle = document.querySelector('.pop-up__form-input_type_image')
+export const formImageUrl = document.querySelector('.pop-up__form-input_type_url')
+
+export const profileEditBtn = document.querySelector('.profile__edit-button')
+export const profileAddBtn = document.querySelector('.profile__add-button')
 
 // Открытие попап
 export const openPopUp = (popup) => {

@@ -1,5 +1,4 @@
 import './index.css';
-// import html from './file.html';
 import { Card } from '../components/Card.js'
 import { FormValidator } from '../components/FormValidator.js'
 import { initialCards } from '../utils/initialCards.js'
@@ -7,20 +6,19 @@ import Section from '../components/Section.js'
 import PopupWithImage from '../components/PopupWithImage.js'
 import UserInfo from '../components/UserInfo.js'
 import PopupWithForm from '../components/PopupWithForm.js'
-// import Popup from './Popup.js'
-import { openPopUp, closePopUp, popUpAddCard, popUpProfile, popUpBtnClose } from '../utils/utils.js'
-
-
-// const formImage = document.querySelector('.pop-up__form_image')
-// const formName = document.querySelector('.pop-up__form-input_type_name')
-// const formHobby = document.querySelector('.pop-up__form-input_type_hobby')
-// const formImageTitle = document.querySelector('.pop-up__form-input_type_image')
-// const formImageUrl = document.querySelector('.pop-up__form-input_type_url')
-// const profileName = document.querySelector('.profile__name')
-// const profileHobby = document.querySelector('.profile__hobby')
-const profileEditBtn = document.querySelector('.profile__edit-button')
-const profileAddBtn = document.querySelector('.profile__add-button')
-const cards = document.querySelector('.cards')
+import {
+  popUpImageImg,
+  popUpImageDescription,
+  popUpImageZoom,
+  closePopUpEsc,
+  closePopUpClickByOverlayOrBtn,
+  formName,
+  formHobby,
+  formImageTitle,
+  formImageUrl,
+  profileEditBtn,
+  profileAddBtn
+} from '../utils/utils.js'
 
 const validationCustom = {
   formSelector: '.pop-up__form',
@@ -30,7 +28,12 @@ const validationCustom = {
   errorClass: 'pop-up__form-input_type_invalid'
 }
 
-const selector = {
+const selectorsConfig = {
+  popUpImageImgUtils: popUpImageImg,
+  popUpImageDescriptionUtils: popUpImageDescription,
+  closePopUpEscUtils: closePopUpEsc,
+  closePopUpClickByOverlayOrBtnUtils: closePopUpClickByOverlayOrBtn,
+  popUpImageZoomUtils: popUpImageZoom,
   popUpFormProfile: '.pop-up__form_profile',
   popUpFormProfileImage: '.pop-up__form_image',
   profileName: '.profile__name',
@@ -45,134 +48,82 @@ const selector = {
   btnClosePopUpZoomImg: '.pop-up__btn-close_type_image-zoom',
   listCard: '.cards',
   card: '#addCard'
-  
-
 }
 
 // Создание класса для проверки на валидность инпута профиля 
-const validationInputProfile = new FormValidator(validationCustom, selector.popUpFormProfile)
+const validationInputProfile = new FormValidator(validationCustom, selectorsConfig.popUpFormProfile)
 validationInputProfile.enableValidation()
 
 // Создание класса для проверки на валидность инпута формы добавления карточки 
-const validationInputImage = new FormValidator(validationCustom, selector.popUpFormProfileImage)
+const validationInputImage = new FormValidator(validationCustom, selectorsConfig.popUpFormProfileImage)
 validationInputImage.enableValidation()
 
 // Создание экземпляра класса попапа с картикой
-const popupWithImage = new PopupWithImage(selector.popUpImageZoom)
-popupWithImage.setEventListeners(selector.btnClosePopUpZoomImg)
+const popupWithImage = new PopupWithImage(selectorsConfig.popUpImageZoom)
+popupWithImage.setEventListeners()
 
 // Создание экземпляра класса с информацией о пользователе
-const userInfo = new UserInfo(selector.profileName, selector.profileHobby)
+const userInfo = new UserInfo({ selectorName: selectorsConfig.profileName, selectorAbout: selectorsConfig.profileHobby })
 
 // Создание экземпляра класса формы профиля
-const formProfile = new PopupWithForm(selector.popUpProfile,{ 
-  handleFormSubmit: (dataForm) => userInfo.setUserInfo(dataForm['pop-up__form-input_type_name'], dataForm['pop-up__form-input_type_hobby'])
+const formProfile = new PopupWithForm(selectorsConfig.popUpProfile, {
+  handleFormSubmit: (dataUser) => {
+    userInfo.setUserInfo(dataUser['input-name'], dataUser['input-hobby'])
+    validationInputImage.clearErrors()
   }
+}
 )
-formProfile.setEventListeners(selector.btnClosePopUpProfile, selector.popUpFormProfile)
+formProfile.setEventListeners()
 
-// Создание экземпляра класса формы карты
-const formAddCard = new PopupWithForm(selector.popUpAddCard, {
-  handleFormSubmit: (dataForm) => {
-    // const { "input-name-card": name, "input-link-card": link } = dataForm;
-    const item = {}
-    item.name = selector.popUpAddCardName
-    item.link = selector.popUpAddCardUrl
-    const card = new Card(item, selector.card)
-    const CardItem = card.generateCard()
-    sectionCard.addItem(CardItem)
-  }
-})
-formAddCard.setEventListeners(selector.btnClosePopUpAddCard, selector.popUpFormProfileImage)
+// Создание экземпляра класса Card
+function createCard(item) {
+  const card = new Card(item, {
+    handleCardClick: () => {
+      popUpImageZoom.classList.add('pop-up_opened')
+    },
+  }, selectorsConfig)
+  const cardItem = card.generateCard()
+  return cardItem
+}
+
 
 // Создание экземпляра класса section
-const sectionCard = new Section( {
+const sectionCard = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item, selector.card)
-    const cardItem = card.generateCard()
+
+    const cardItem = createCard(item)
     sectionCard.addItem(cardItem)
   }
 },
-selector.listCard)
+  selectorsConfig.listCard)
 sectionCard.renderer()
+
+// Создание экземпляра класса формы карты
+const formAddCard = new PopupWithForm(selectorsConfig.popUpAddCard, {
+  handleFormSubmit: () => {
+    const item = {}
+    item.name = formImageTitle.value
+    item.link = formImageUrl.value
+    const cardItem = createCard(item)
+    sectionCard.prependItem(cardItem)
+  }
+})
+formAddCard.setEventListeners(selectorsConfig.btnClosePopUpAddCard, selectorsConfig.popUpFormProfileImage)
 
 // Слушатель - кнопки редактирования профиля
 profileEditBtn.addEventListener('click', () => {
+  const userData = userInfo.getUserInfo();
+  console.log('вызов из index.js: ', userData)
+  formName.value = userData.name
+  formHobby.value = userData.hobby
+  validationInputProfile.clearErrors()
   formProfile.open()
-  validationInputProfile.enableValidation()
-  const userData = userInfo.getUserInfo()
-  userInfo.setUserInfo(userData.name, userData.about)
-  }
+}
 )
 
 // Слушатель - кнопки добавления фотографий
 profileAddBtn.addEventListener('click', () => {
+  validationInputImage.clearErrors()
   formAddCard.open()
-  validationInputImage.enableValidation()
 })
-// Установить данные профиля в форму removeEventListener
-// const setProfileData = () => {
-//   formName.value = profileName.textContent
-//   formHobby.value = profileHobby.textContent
-// }
-
-// Установка данных формы профиля в профиль 
-// const setFormSubmitData = (e) => {
-//   profileName.textContent = formName.value
-//   profileHobby.textContent = formHobby.value
-//   closePopUp(popUpProfile)
-// }
-
-// Открытие попап формы редактирования профиля и добавить в него данные профиля
-// const openPopUpProfile = () => {
-//   setProfileData()
-//   validationInputProfile.clearErrors(popUpProfile)
-//   openPopUp(popUpProfile)
-// }
-
-// Открытие попап формы добавления карточки
-// const openPopUpAddCard = () => {
-//   formImageUrl.value = ''
-//   formImageTitle.value = ''
-//   validationInputImage.clearErrors(popUpAddCard)
-//   openPopUp(popUpAddCard)
-// }
-
-// Создание карточки
-// const createCard = (data) => {
-//   const card = new Card(data, '#addCard')
-//   const cardElement = card.generateCard()
-//   return cardElement
-// }
-
-// Создание карточки из данных формы добавления карточки
-// const addInitialCardForm = (e) => {
-//   const data = {}
-//   data.name = formImageTitle.value
-//   data.link = formImageUrl.value
-//   addCard(createCard(data), cards)
-//   closePopUp(popUpAddCard)
-// }
-
-// Добавление карточки
-// const addCard = (el, elList) => {
-//   elList.prepend(el)
-// }
-
-//Добавление массива карточек InitialCards
-// const addInitialCards = (el, elList) => {
-//   elList.append(el)
-// }
-
-//Добавление карточек в дом  из массива initialCards
-// initialCards.map((el) => {
-//   addInitialCards(createCard(el), cards)
-// })
-
-
-
-// popUpProfile.addEventListener('submit', setFormSubmitData)
-// profileEditBtn.addEventListener('click', openPopUpProfile)
-// profileAddBtn.addEventListener('click', openPopUpAddCard)
-// formImage.addEventListener('submit', addInitialCardForm)
