@@ -5,27 +5,32 @@ export default class PopupWithForm extends Popup {
   constructor( containerPopupSelector, { handleFormSubmit } ) {
     super(containerPopupSelector)
     this._handleFormSubmit = handleFormSubmit;
+    this._formItem = this._containerPopup.querySelector('.pop-up__form')
   }
 
 
   _getInputValues() {
+    console.log(this._inputValues)
     this._inputList = Array.from( 
-    this.containerPopupSelector
+    this._containerPopup
     .querySelectorAll('.pop-up__form-input'));
-    this._formValues = {};
-    this._inputList.forEach(
-      input => this._formValues[input.name] = input.value);
+    this._inputValues = {};
+    this._inputList.forEach((input) => {
+      this._inputValues[input.name] = input.value
+      console.log(this._inputValues)
+    });
+    console.log(this._inputValues)
+    return this._inputValues;
     
-    return this._formValues;
   }
 
 
-  setEventListeners(btnClosePopupSelector, popUpFormSelector) {
-    super.setEventListeners(btnClosePopupSelector)
-    this._formItem = this._containerPopup.querySelector(popUpFormSelector)
+  setEventListeners() {
+    super.setEventListeners()
     this._formItem.addEventListener('submit', (e) => {
+      console.log('Сработал submit WithForm: ')
       e.preventDefault()
-      this._handleFormSubmit(this._getInputValues)
+      this._handleFormSubmit(this._getInputValues())
       this.close()
     })
   }
@@ -33,12 +38,5 @@ export default class PopupWithForm extends Popup {
   close() {
     super.close()
     this._formItem.reset()
-    this._formItem
-      .querySelectorAll('.pop-up__form-input-error')
-      .forEach((item) => item.textContent = '')
-    this._formItem.querySelectorAll('.pop-up__form-input')
-    .forEach((item) => {
-      item.classList.remove('pop-up__form-input_type_invalid')
-    })
   }
 }

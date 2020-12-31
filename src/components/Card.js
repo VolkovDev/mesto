@@ -1,10 +1,16 @@
-import { popUpImageImg, popUpImageDescription, popUpImageZoom, closePopUpEsc, closePopUpClickByOverlayOrBtn} from '../utils/utils.js'
+import { popUpImageImg, popUpImageDescription, closePopUpEsc, closePopUpClickByOverlayOrBtn} from '../utils/utils.js'
 
 export class Card {
-  constructor(data, cardSelector) {
+  constructor(data, {handleCardClick}, selectorsConfig) {
     this._name = data.name
     this._link = data.link
-    this._cardSelector = cardSelector
+    this._cardSelector = selectorsConfig.card
+    this._popUpImageImg = selectorsConfig.popUpImageImgUtils
+    this._popUpImageDescription = selectorsConfig.popUpImageDescriptionUtils
+    this._closePopUpEsc = selectorsConfig.closePopUpEscUtils
+    this._closePopUpClickByOverlayOrBtn = selectorsConfig.closePopUpClickByOverlayOrBtnUtils
+    this._popUpImageZoom = selectorsConfig.popUpImageZoomUtils
+    this._handleCardClick = handleCardClick
   }
 
   // Получние контекста Template
@@ -34,7 +40,10 @@ export class Card {
   // Добавление слушателей событий
   _setEventListeners() {
     this._elementLikeBtn.addEventListener('click', () => this._toggleLikeCard())
-    this._elementImage.addEventListener('click', () => this._openPopup())
+    this._elementImage.addEventListener('click', () => {
+      this._openPopup(), 
+      this._handleCardClick()
+    })
     this._elementDeleteBtn.addEventListener('click', () => this._deleteCard())
   }
 
@@ -51,12 +60,12 @@ export class Card {
 
   // Открытие попап изображение карточки
   _openPopup() {
-    popUpImageImg.src = this._link
-    popUpImageImg.alt = `На фотографии изображение ${this._name}`
-    popUpImageDescription.textContent = this._name
-    popUpImageZoom.classList.add('pop-up_opened')
-    document.addEventListener('keydown', closePopUpEsc)
-    popUpImageZoom.addEventListener('click', closePopUpClickByOverlayOrBtn)
+    this._popUpImageImg.src = this._link
+    this._popUpImageImg.alt = `На фотографии изображение ${this._name}`
+    this._popUpImageDescription.textContent = this._name
+    // popUpImageZoom.classList.add('pop-up_opened')
+    document.addEventListener('keydown', this._closePopUpEsc)
+    this._popUpImageZoom.addEventListener('click', this._closePopUpClickByOverlayOrBtn)
   }
 
 }
