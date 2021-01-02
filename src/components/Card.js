@@ -1,5 +1,3 @@
-import { popUpImageImg, popUpImageDescription, closePopUpEsc, closePopUpClickByOverlayOrBtn} from '../utils/utils.js'
-
 export class Card {
   constructor(data, {handleCardClick}, selectorsConfig) {
     this._name = data.name
@@ -60,10 +58,6 @@ export class Card {
 
   // Открытие попап изображение карточки
   _openPopup() {
-    this._popUpImageImg.src = this._link
-    this._popUpImageImg.alt = `На фотографии изображение ${this._name}`
-    this._popUpImageDescription.textContent = this._name
-    // popUpImageZoom.classList.add('pop-up_opened')
     document.addEventListener('keydown', this._closePopUpEsc)
     this._popUpImageZoom.addEventListener('click', this._closePopUpClickByOverlayOrBtn)
   }

@@ -25,7 +25,8 @@ const validationCustom = {
   inputSelector: '.pop-up__form-input',
   submitButtonSelector: '.pop-up__form-btn-submit',
   inactiveButtonClass: 'pop-up__form-btn-submit_disabled',
-  errorClass: 'pop-up__form-input_type_invalid'
+  errorClass: 'pop-up__form-input_type_invalid',
+  inputErrorClass:'.pop-up__form-input-error'
 }
 
 const selectorsConfig = {
@@ -50,22 +51,22 @@ const selectorsConfig = {
   card: '#addCard'
 }
 
-// Создание класса для проверки на валидность инпута профиля 
+// Создание класса для проверки на валидность инпута профиля  
 const validationInputProfile = new FormValidator(validationCustom, selectorsConfig.popUpFormProfile)
 validationInputProfile.enableValidation()
 
-// Создание класса для проверки на валидность инпута формы добавления карточки 
+// Создание класса для проверки на валидность инпута формы добавления карточки  
 const validationInputImage = new FormValidator(validationCustom, selectorsConfig.popUpFormProfileImage)
 validationInputImage.enableValidation()
 
-// Создание экземпляра класса попапа с картикой
+// Создание экземпляра класса попапа с картикой 
 const popupWithImage = new PopupWithImage(selectorsConfig.popUpImageZoom)
 popupWithImage.setEventListeners()
 
-// Создание экземпляра класса с информацией о пользователе
+// Создание экземпляра класса с информацией о пользователе 
 const userInfo = new UserInfo({ selectorName: selectorsConfig.profileName, selectorAbout: selectorsConfig.profileHobby })
 
-// Создание экземпляра класса формы профиля
+// Создание экземпляра класса формы профиля 
 const formProfile = new PopupWithForm(selectorsConfig.popUpProfile, {
   handleFormSubmit: (dataUser) => {
     userInfo.setUserInfo(dataUser['input-name'], dataUser['input-hobby'])
@@ -75,11 +76,11 @@ const formProfile = new PopupWithForm(selectorsConfig.popUpProfile, {
 )
 formProfile.setEventListeners()
 
-// Создание экземпляра класса Card
+// Создание экземпляра класса Card 
 function createCard(item) {
   const card = new Card(item, {
     handleCardClick: () => {
-      popUpImageZoom.classList.add('pop-up_opened')
+      popupWithImage.open( item.link, item.name )
     },
   }, selectorsConfig)
   const cardItem = card.generateCard()
@@ -87,7 +88,7 @@ function createCard(item) {
 }
 
 
-// Создание экземпляра класса section
+// Создание экземпляра класса section 
 const sectionCard = new Section({
   items: initialCards,
   renderer: (item) => {
@@ -99,7 +100,7 @@ const sectionCard = new Section({
   selectorsConfig.listCard)
 sectionCard.renderer()
 
-// Создание экземпляра класса формы карты
+// Создание экземпляра класса формы карты 
 const formAddCard = new PopupWithForm(selectorsConfig.popUpAddCard, {
   handleFormSubmit: () => {
     const item = {}
@@ -111,7 +112,7 @@ const formAddCard = new PopupWithForm(selectorsConfig.popUpAddCard, {
 })
 formAddCard.setEventListeners(selectorsConfig.btnClosePopUpAddCard, selectorsConfig.popUpFormProfileImage)
 
-// Слушатель - кнопки редактирования профиля
+// Слушатель - кнопки редактирования профиля 
 profileEditBtn.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
   console.log('вызов из index.js: ', userData)
@@ -122,8 +123,8 @@ profileEditBtn.addEventListener('click', () => {
 }
 )
 
-// Слушатель - кнопки добавления фотографий
+// Слушатель - кнопки добавления фотографий 
 profileAddBtn.addEventListener('click', () => {
   validationInputImage.clearErrors()
   formAddCard.open()
-})
+}) 
