@@ -6,7 +6,6 @@
   <meta name='viewport' content='width=device-width, initial-scale=1.0' />
   <meta name='keywords' content='HTML, CSS, Grid, JavaScript' />
   <meta name='author' content='Volkov Andrey' />
-  <link rel='shortcut icon' href='./images/mesto_favicon.gif' type='image/x-icon' />
   <title>Mesto</title>
 </head>
 
@@ -14,13 +13,20 @@
   <div class='page'>
 
     <header class='header'>
-      <a href='#' class='header__link' target="_blank"><img src='./images/logo_mesto.svg' alt='логотип' class='header__logo'></a>
+      <a href='#' class='header__link' target='_blank'><img src='./images/logo_mesto.svg' alt='логотип'
+          class='header__logo'></a>
     </header>
 
     <main class='content'>
 
       <section class='profile'>
-        <div class='profile__avatar'></div>
+        <div class='profile__avatar-container'>
+          <img
+            src='./images/loading-gif.gif'
+            alt='Фотография'
+            class='profile__avatar'
+          />
+        </div>
         <div class='profile__info'>
           <h1 class='profile__name'>Жак-Ив Кусто</h1>
           <button class='profile__edit-button' type='button'></button>
@@ -35,7 +41,7 @@
     </main>
 
     <footer class='footer'>
-      <a href='#' class='footer__link' target="_blank">&copy; 2020 Mesto Russia</a>
+      <a href='#' class='footer__link' target='_blank'>&copy; 2020 Mesto Russia</a>
     </footer>
     <div class='pop-up pop-up_type_profile'>
       <div class='pop-up__container pop-up__container_opened_profile'>
@@ -46,12 +52,12 @@
 
           <input name='input-name' type='text' id='name-input' value=''
             class='pop-up__form-input pop-up__form-input_type_name' placeholder='Имя Фамилия' required minlength='2'
-            maxlength='40' autocomplete="off">
+            maxlength='40' autocomplete='off'>
           <span class='pop-up__form-input-error' id='name-input-error'></span>
 
           <input name='input-hobby' type='text' id='hobby-input' value=''
             class='pop-up__form-input pop-up__form-input_type_hobby' placeholder='Хобби' required minlength='2'
-            maxlength='200' autocomplete="off">
+            maxlength='200' autocomplete='off'>
           <span class='pop-up__form-input-error' id='hobby-input-error'></span>
 
           <button class='pop-up__form-btn-submit' type='submit'>Сохранить</button>
@@ -68,12 +74,12 @@
 
           <input name='input-name-image' type='text' id='name-image-input' value=''
             class='pop-up__form-input pop-up__form-input_type_image' placeholder='Название' required minlength='2'
-            maxlength='30' autocomplete="off">
+            maxlength='30' autocomplete='off'>
           <span class='pop-up__form-input-error' id='name-image-input-error'></span>
 
           <input name='input-url' type='url' id='url-input' value=''
             class='pop-up__form-input pop-up__form-input_type_url' placeholder='Ссылка на картинку' required
-            autocomplete="off">
+            autocomplete='off'>
           <span class='pop-up__form-input-error' id='url-input-error'></span>
 
           <button class='pop-up__form-btn-submit' type='submit'>Создать</button>
@@ -89,13 +95,48 @@
       </figure>
     </div>
   </div>
+
+  <div class='pop-up pop-up_type_confirm'>
+    <div class='pop-up__container pop-up__container_opened_confirm'>
+      <button class='pop-up__btn-close pop-up__btn-close_type_confirm' type='button'
+        aria-label='Закрыть форму'></button>
+    <form name='form-confirm' action='#' class='pop-up__form pop-up__form_confirm' method='#'>
+      <h3 class='pop-up__form-title'>Вы уверены?</h3>
+      <button class='pop-up__form-btn-submit pop-up__form-btn-submit_comfirm' type='button'>
+        Да
+      </button>
+    </form>
+    </div>
+  </div>
+
+  <div class='pop-up pop-up_type_avatar'>
+    <div class='pop-up__container pop-up__container_opened_avatar'>
+      <button class='pop-up__btn-close pop-up__btn-close_type_avatar' type='button'
+      aria-label='Закрыть форму'></button>
+    <form name='form-avatar' action='#' class='pop-up__form pop-up__form_avatar' method='PATCH'>
+      <h3 class='pop-up__form-title'>Обновить аватар</h3>
+        <input name='input-avatar' id='avatar-input' type='url' class='pop-up__form-input pop-up__form-input_type_link-avatar' value=''
+          placeholder='Ссылка на картинку' required />
+        <span class='pop-up__form-input-error' id='avatar-input-error'></span>
+      <button type='submit' class='pop-up__form-btn-submit' disabled>
+        Сохранить
+      </button>
+      </div>
+    </form>
+  </div>
   <template id='addCard'>
     <article class='card'>
       <img src='#' alt='Изображение' class='card__image'>
       <button type='button' class='card__delete-btn'></button>
       <div class='card__element'>
         <h3 class='card__title'></h3>
-        <button class='card__like-btn' type='button'></button>
+        <div class='card__like-container'>
+        <button 
+          class='card__like-btn' 
+          type='button'
+          aria-label='Поставить лайк'
+        ></button>
+        <div class='card__like-counter'>0</div>
       </div>
     </article>
   </template>
