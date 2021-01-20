@@ -38,7 +38,6 @@ const validationCustom = {
 }
  
 const selectorsConfig = {
-  // avatarEdit: '.profile__avatar-container',
   popUpAvatar: '.pop-up_type_avatar',
   popUpFormAvatar: '.pop-up__form_avatar', 
   popUpConfirm: '.pop-up_type_confirm',
@@ -58,10 +57,6 @@ const selectorsConfig = {
   popUpAddCardName: '.pop-up__form-input_type_image',
   popUpAddCardUrl: '.pop-up__form-input_type_url',
   popUpImageZoom: '.pop-up_type_image-zoom',
-  // btnClosePopUpAddCard: '.pop-up__btn-close_type_add-card',
-  // btnClosePopUpProfile: '.pop-up__btn-close_type_profile',
-  // btnClosePopUpZoomImg: '.pop-up__btn-close_type_image-zoom',
-  // btnClosePopUpConfirm: '.pop-up__btn-close_type_confirm',
   cardImage: '.card__image',
   cardDeleteBtn: '.card__delete-btn',
   cardLikeBtn: '.card__like-btn',
@@ -118,7 +113,6 @@ api.getInfoUser()
 .catch(err => console.error('ошибка получения данных User: ', err))
 
 // Получение массива карточек
-const InitialCards = () => {
   api.getInitialCards()
     .then(result => {
       console.log('addCardsUsers: ',result);
@@ -134,8 +128,8 @@ const InitialCards = () => {
 
   })
   .catch(err => console.log('Ошибка при получении данных карточек', err))
-}
-InitialCards()
+
+
 
 // Создание экземпляра класса формы профиля 
 const formProfile = new PopupWithForm(selectorsConfig.popUpProfile, {
@@ -185,14 +179,7 @@ const formAddCard = new PopupWithForm(selectorsConfig.popUpAddCard, {
     const cardItem = createCard(item)
     console.log('это карточка createCard: ', cardItem)
     sectionCard.prependItem(cardItem)
-    InitialCards()
     })
-    
-    // const item = {}
-    // item.name = formImageTitle.value
-    // item.link = formImageUrl.value
-    // const cardItem = createCard(item)
-    // sectionCard.prependItem(cardItem)
   }
 })
 formAddCard.setEventListeners()
@@ -206,7 +193,7 @@ function createCard(item) {
     },
     handleBtnDelete: () => {
       popupWithConfirm.open();
-      popupWithConfirm.handleButton(function () {
+      popupWithConfirm.handleBtn(function () {
         api
           .deleteCard(item._id)
           .then(() => {
@@ -216,23 +203,22 @@ function createCard(item) {
       });
     },
     handleBtnLike: () => {
-      if (!card.getElementLike().classList.contains('card__like-btn_active')) {
+      if (!card.getElementLike().classList.contains(selectorsConfig.cardLikeBtnActive)) {
         api.putHandlerLike(item._id)
           .then((res) => {
-            console.log('получить лайк: ', res )
+            console.log('get like: ', res )
             card.setLikes(res.likes);
-            // card.toggleLike();
+            card.toggleLikeCard();
           })
           .catch((err) => console.log(err));
       } else {
         api.deleteLike(item._id)
-        console.log('delete Like: ', item._id)
           .then((res) => {
-            console.log('like: ', res)
+            console.log('like delete: ', res)
             card.setLikes(res.likes);
-            // card.toggleLike();
+            card.toggleLikeCard();
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.log('ошибка удаления лайка: ', err));
       }
     },
   }, selectorsConfig)
@@ -241,29 +227,16 @@ function createCard(item) {
   return cardItem
 }
 
-
-// Создание экземпляра класса section 
-// const sectionCard = new Section({
-//   items: initialCards,
-//   renderer: (item) => {
-
-//     const cardItem = createCard(item)
-//     sectionCard.addItem(cardItem)
-//   }
-// },
-//   selectorsConfig.listCard)
-// sectionCard.renderer()
-
-
-// Promise.all([api.getUserInfo()])
-//   .then((result) => {
-//     userInfo.setUserInfo(result[1].name, result[1].about);
-//     // document.querySelector(selectors.profileAvatar).src = result[1].avatar;
-//   })
-//   .catch((err) => console.log(err));
+  Promise.all([api.getInitialCards(), api.getInfoUser()])
+  .then((result) => {
+    userInfo.setUserInfo({name: result[1].name, about: result[1].about, avatar: result[1].avatar, _id: result[1]._id});
+    document.querySelector(selectorsConfig.profileAvatar).src = result[1].avatar;
+  })
+  .catch((err) => console.log(err));
 
 // Слушатель - кнопки редактирования профиля 
 profileEditBtn.addEventListener('click', () => {
+  formProfile.handleBtnForm("Сохранить");
   const userData = userInfo.getUserInfo();
   console.log('вызов из index.js: ', userData)
   formName.value = userData.name
@@ -275,53 +248,14 @@ profileEditBtn.addEventListener('click', () => {
 
 // Слушатель - кнопки добавления фотографий 
 profileAddBtn.addEventListener('click', () => {
+  formAddCard.handleBtnForm("Создать");
   validationInputImage.clearErrors()
   formAddCard.open()
 }) 
 
 // Слушатель кнопки аватар
 avatarEdit.addEventListener("click", () => {
+  formProfile.handleBtnForm("Сохранить");
   validationInputAvatar.clearErrors()
   formAvatar.open();
 });
-
-// const getAllData = () => {
-//   const card = new Card(data, selectors.card, {
-//     handleCardClick: () => popupWithImage.open(data.link, data.name),
-//     handleBtnDelete: () => {
-//       const popupWithConfirm = new popupWithConfirm (selectorsConfig.popUpConfirm, {
-//         handleFormSubmit: () => {
-//           api.deleteCard(data._id)
-//           .then(() => {
-//             card.deleteCard();
-//           })
-//           .catch((err) => console.log(err));
-//         }
-//       })
-//       popupWithConfirm.open();
-//     },
-//     handleButtonLike: () => {
-//       if (!card.getElementLike().classList.contains(selectorsConfig.cardLikeBtnActive)) {
-//         api.putHandlerLike(data._id)
-//           .then((res) => {
-//             card.setLikes(res.likes);
-//             card.toggleLike();
-//           })
-//           .catch((err) => console.log(err));
-//       } else {
-//         api.deleteLike(data._id)
-//           .then((res) => {
-//             card.setLikes(res.likes);
-//             card.toggleLike();
-//           })
-//           .catch((err) => console.log(err));
-//       }
-//     },
-//   });
-
-//     //Создание карточки и добавление лайков
-//     const cardElement = card.generateCard(data.owner._id);
-//     card.setLikes(data.likes);
-//     sectionCard.appendItem(cardElement);
-//     card.close();
-// }

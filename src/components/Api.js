@@ -101,7 +101,7 @@ class Api {
 
   deleteLike( _id ) {
     return fetch(`${this._adress}/cards/likes/${_id}`, {
-      method: 'DELETE ',
+      method: 'DELETE',
       headers: {
         authorization: this._token,
         'Content-Type': 'application/json'

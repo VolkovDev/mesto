@@ -34,21 +34,7 @@ export class Card {
     return cardElement
   }
 
-  // Создание карточки
-  // generateCard() {
-  //   this._element = this._getTemplate()
-  //   this._element.querySelector('.card__title').textContent = this._name
-  //   this._element.querySelector('.card__image').src = this._link
-  //   this._elementImage = this._element.querySelector('.card__image')
-  //   this._elementImage.alt = `На фотографии изображение ${this._name}`
-  //   this._elementLikeBtn = this._element.querySelector('.card__like-btn')
-  //   this._elementDeleteBtn = this._element.querySelector('.card__delete-btn')
-  //   this._setEventListeners()
-
-  //   return this._element
-  // }
-
-    // Создание карточки
+    // Создание экземпляра карточки
     generateCard( _id ) {
       this._element = this._getTemplate()
       this._element.querySelector('.card__title').textContent = this._name
@@ -69,16 +55,10 @@ export class Card {
 
   // Добавление слушателей событий
   _setEventListeners() {
-    // this._elementLikeBtn.addEventListener('click', () => this._toggleLikeCard())
     this._elementImage.addEventListener('click', () => {
       this._openPopup(), 
       this._handleCardClick()
     })
-    // this._elementDeleteBtn.addEventListener('click', () => this._deleteCard())
-      // this._elementDeleteBtn.addEventListener('click', () => {
-      // this._handleBtnDelete
-      // this._deleteCard()
-    // })
     this._elementLikeBtn.addEventListener("click", this._handleBtnLike);
     this._elementDeleteBtn.addEventListener("click", this._handleBtnDelete);
     this._elementImage.addEventListener("click", this._handleCardClick);
@@ -91,7 +71,7 @@ export class Card {
   }
 
   // Смена состояния лайка
-  _toggleLikeCard() {
+  toggleLikeCard() {
     this._elementLikeBtn.classList.toggle(this._cardLikeBtnActive)
   }
 
@@ -100,18 +80,6 @@ export class Card {
     document.addEventListener('keydown', this._closePopUpEsc)
     this._popUpImageZoom.addEventListener('click', this._closePopUpClickByOverlayOrBtn)
   }
-
-  // // Получние контекста Template
-  // _getTemplate() {
-  //   const cardElement = document
-  //     .querySelector(this._cardSelector)
-  //     .content
-  //     .querySelector('.card')
-  //     .cloneNode(true)
-  //   return cardElement
-  // }
-
-
 
   //Установить цвет лайка
   _setColorLike(userId, arrLikes) {
@@ -140,21 +108,6 @@ export class Card {
   getElementLike() {
     return this._elementLikeBtn;
   }
-  // // Добавление слушателей событий
-  // _setEventListeners() {
-  //   this._elementLikeBtn.addEventListener('click', () => {
-  //     this._toggleLikeCard()
-  //     this._handleBtnLike
-  //   })
-  //   this._elementImage.addEventListener('click', () => {
-  //     this._openPopup(),
-  //       this._handleCardClick
-  //   })
-  //   this._elementDeleteBtn.addEventListener('click', () => {
-  //     this._handleBtnDelete
-  //     this._deleteCard()
-  //   })
-  // }
 
   //Удаление карточки из дома
   _deleteCard() {
