@@ -40,7 +40,7 @@ const selectorsConfig = {
   popUpAvatar: '.pop-up_type_avatar',
   popUpFormAvatar: '.pop-up__form_avatar', 
   popUpConfirm: '.pop-up_type_confirm',
-  popUpConfirmBtn: '.pop-up__form-btn_comfirm',
+  // popUpConfirmBtn: '.pop-up__form-btn_comfirm',
   popUpImageImgUtils: popUpImageImg,
   popUpImageDescriptionUtils: popUpImageDescription,
   closePopUpEscUtils: closePopUpEsc,
@@ -53,8 +53,8 @@ const selectorsConfig = {
   profileHobby: '.profile__hobby',
   popUpProfile: '.pop-up_type_profile',
   popUpAddCard: '.pop-up_type_add-card',
-  popUpAddCardName: '.pop-up__form-input_type_image',
-  popUpAddCardUrl: '.pop-up__form-input_type_url',
+  // popUpAddCardName: '.pop-up__form-input_type_image',
+  // popUpAddCardUrl: '.pop-up__form-input_type_url',
   popUpImageZoom: '.pop-up_type_image-zoom',
   cardImage: '.card__image',
   cardDeleteBtn: '.card__delete-btn',
@@ -64,7 +64,7 @@ const selectorsConfig = {
   cardDeleteBtnNonActive: 'card__delete-btn_non-active',
   listCard: '.cards',
   card: '#addCard',
-  initialCards: []
+  // initialCards: []
 }
 
 
@@ -88,13 +88,6 @@ const popupWithConfirm = new PopupWithConfirm(selectorsConfig.popUpConfirm,
     {
     handleFormSubmit: () => {
       popupWithConfirm.handleBtnForm('Удаление...');
-  //   handleFormSubmit: function () {
-  //     api
-  //       .deleteCard(data._id)
-  //       .then(() => {
-  //         card.deleteCard();
-  //       })
-  //       .catch((err) => console.log(err));
       }
     }
 ) 
@@ -127,8 +120,6 @@ api.getInfoUser()
 
   })
   .catch(err => console.log('Ошибка при получении данных карточек', err))
-
-
 
 // Создание экземпляра класса формы профиля 
 const formProfile = new PopupWithForm(selectorsConfig.popUpProfile, {
@@ -169,17 +160,17 @@ const formAddCard = new PopupWithForm(selectorsConfig.popUpAddCard, {
     formAddCard.handleBtnForm('Сохранение...');
     api.postAddNewCard({name:formImageTitle.value, link:formImageUrl.value})
     .then((data) => {
-      console.log(data)
-          const item = {}
-    item.name = data.name
-    item.link = data.link
-    item.likes = data.likes
-    console.log('это карточка item: ', item)
-    const cardItem = createCard(item)
+      console.log('данные отправки из формы карточки: ', data)
+    const sectionCard = new Section ({
+      items: data,
+      renderer: () => {}
+  }, selectorsConfig.listCard)
+  const cardItem = createCard(data)
+  sectionCard. prependItem(cardItem)
     console.log('это карточка createCard: ', cardItem)
-    sectionCard.prependItem(cardItem)
-    })
-  }
+  })
+  .catch(err => console.log('Ошибка при добавлении новой карточки: ', err))
+}
 })
 formAddCard.setEventListeners()
 
@@ -196,10 +187,11 @@ function createCard(item) {
         api
           .deleteCard(item._id)
           .then(() => {
-            card._deleteCard();
+            card.deleteCard();
           })
           .catch((err) => console.log(err));
       });
+      popupWithConfirm.handleBtnForm('Да')
     },
     handleBtnLike: () => {
       if (!card.getElementLike().classList.contains(selectorsConfig.cardLikeBtnActive)) {
@@ -213,7 +205,7 @@ function createCard(item) {
       } else {
         api.deleteLike(item._id)
           .then((res) => {
-            console.log('like delete: ', res)
+            console.log('delete like : ', res)
             card.setLikes(res.likes);
             card.toggleLikeCard();
           })
@@ -221,7 +213,7 @@ function createCard(item) {
       }
     },
   }, selectorsConfig)
-  const cardItem = card.generateCard(item.owner._id)
+  const cardItem = card.generateCard()
   card.setLikes(item.likes);
   return cardItem
 }
@@ -230,6 +222,7 @@ function createCard(item) {
   .then((result) => {
     userInfo.setUserInfo({name: result[1].name, about: result[1].about, avatar: result[1].avatar, _id: result[1]._id});
     document.querySelector(selectorsConfig.profileAvatar).src = result[1].avatar;
+    console.log('Промисы получены')
   })
   .catch((err) => console.log(err));
 

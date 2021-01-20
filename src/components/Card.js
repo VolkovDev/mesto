@@ -4,6 +4,7 @@ export class Card {
     this._link = data.link
     this._id = data._id;
     this._likes = data.likes;
+    this._idUser = data.owner._id
     this._cardSelector = selectorsConfig.card
     this._popUpImageImg = selectorsConfig.popUpImageImgUtils
     this._popUpImageDescription = selectorsConfig.popUpImageDescriptionUtils
@@ -35,7 +36,7 @@ export class Card {
   }
 
     // Создание экземпляра карточки
-    generateCard( _id ) {
+    generateCard() {
       this._element = this._getTemplate()
       this._element.querySelector('.card__title').textContent = this._name
       this._element.querySelector(this._cardImage).src = this._link
@@ -45,7 +46,7 @@ export class Card {
       this._elementLikeCounter = this._element.querySelector(this._cardLikeCounter)
       this._setColorLike('b514243d770d323aa2f5bb30', this._likes);
       this._elementDeleteBtn = this._element.querySelector('.card__delete-btn')
-      if (_id !== 'b514243d770d323aa2f5bb30') {
+      if (this._idUser !== 'b514243d770d323aa2f5bb30') {
         this._elementDeleteBtn.classList.add(this._cardDeleteBtnNonActive)
       }
       this._setEventListeners()
@@ -65,7 +66,7 @@ export class Card {
   }
 
   //Удаление карточки из дома
-  _deleteCard() {
+  deleteCard() {
     this._element.remove()
     this._element = null
   }
