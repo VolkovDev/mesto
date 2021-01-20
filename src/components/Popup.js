@@ -16,7 +16,6 @@ export default class Popup {
     document.addEventListener('keydown', this._handleEscClose)
   }
 
-
   close() {
     this._containerPopup.classList.remove('pop-up_opened')
     document.removeEventListener('keydown', this._handleEscClose)
@@ -29,5 +28,10 @@ export default class Popup {
         ? this.close()
         : null
     )
+  }
+
+  handleBtnForm(textBtn) {
+    const btnForm = this._containerPopup.querySelector('.pop-up__form-btn-submit');
+    btnForm.textContent = textBtn;
   }
 } 

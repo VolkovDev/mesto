@@ -13,6 +13,7 @@
 /* Блок profile */
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__avatar-container/profile__avatar-container.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__hobby/profile__hobby.css);
@@ -27,10 +28,12 @@
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__image/card__image.css);
 @import url(../blocks/card/__delete-btn/card__delete-btn.css);
+@import url(../blocks/card/__delete-btn/_non-active/card__delete-btn_non-active.css);
 @import url(../blocks/card/__element/card__element.css);
 @import url(../blocks/card/__title/card__title.css);
 @import url(../blocks/card/__like-btn/card__like-btn.css);
 @import url(../blocks/card/__like-btn/_active/card__like-btn_active.css);
+@import url(../blocks/card/__like-counter/card__like-counter.css);
 
 
 /* Подвал сайта, блок footer */
@@ -47,13 +50,16 @@
 @import url(../blocks/pop-up/__description/pop-up__description.css);
 @import url(../blocks/pop-up/__container/_opened/pop-up__container_opened_profile.css);
 @import url(../blocks/pop-up/__container/_opened/pop-up__container_opened_add-card.css);
+@import url(../blocks/pop-up/__container/_opened/pop-up__container_opened_confirm.css);
 @import url(../blocks/pop-up/__btn-close/pop-up__btn-close.css);
 @import url(../blocks/pop-up/__btn-close/_type/pop-up__btn-close_type_profile.css);
 @import url(../blocks/pop-up/__btn-close/_type/pop-up__btn-close_type_add-card.css);
 @import url(../blocks/pop-up/__btn-close/_type/pop-up__btn-close_type_image-zoom.css);
+@import url(../blocks/pop-up/__btn-close/_type/pop-up__btn-close_type_avatar.css);
 @import url(../blocks/pop-up/_type/pop-up_type_profile.css);
 @import url(../blocks/pop-up/_type/pop-up_type_add-card.css);
 @import url(../blocks/pop-up/_type/pop-up_type_image-zoom.css);
+@import url(../blocks/pop-up/_type/pop-up_type_confirm.css);
 
 /* form элемент блока pop-up*/
 @import url(../blocks/pop-up/__form/pop-up__form.css);
@@ -69,4 +75,6 @@
 @import url(../blocks/pop-up/__form-btn-submit/_disabled/pop-up__form-btn-submit_disabled.css);
 @import url(../blocks/pop-up/__form/_image/pop-up__form_image.css);
 @import url(../blocks/pop-up/__form/_profile/pop-up__form_profile.css);
+@import url(../blocks/pop-up/__form/_avatar/pop-up__form_avatar.css);
 @import url(../blocks/pop-up/_opened/pop-up_opened.css);
+@import url(../blocks/pop-up/__container/_opened/pop-up__container_opened_avatar.css);

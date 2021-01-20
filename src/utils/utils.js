@@ -15,6 +15,7 @@ export const formImageUrl = document.querySelector('.pop-up__form-input_type_url
 
 export const profileEditBtn = document.querySelector('.profile__edit-button')
 export const profileAddBtn = document.querySelector('.profile__add-button')
+export const avatarEdit = document.querySelector('.profile__avatar-container')
 
 // Открытие попап
 export const openPopUp = (popup) => {
