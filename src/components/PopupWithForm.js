@@ -29,12 +29,16 @@ export default class PopupWithForm extends Popup {
       console.log('Сработал submit WithForm: ', e)
       e.preventDefault()
       this._handleFormSubmit(this._getInputValues())
-      this.close()
     })
   }
 
   close() {
     super.close()
     this._formItem.reset()
+  }
+
+  handleBtnForm(textBtn) {
+    const btnForm = this._containerPopup.querySelector('.pop-up__form-btn-submit');
+    btnForm.textContent = textBtn;
   }
 }

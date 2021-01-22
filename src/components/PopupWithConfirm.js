@@ -1,11 +1,9 @@
 import Popup from './Popup.js'
 
 class PopupWithConfirm extends Popup {
-  constructor(containerPopupSelector, 
-    { handleFormSubmit }
+  constructor(containerPopupSelector,
     ) {
     super(containerPopupSelector)
-    this._handleFormSubmit = handleFormSubmit
   }
 
   _deleteCard(handleApiData) {
@@ -14,7 +12,6 @@ class PopupWithConfirm extends Popup {
   }
 
   _close() {
-    this._handleFormSubmit();
     super.close();
     this._btnSubmit.removeEventListener("click", this._deleteCard);
   }

@@ -4,6 +4,10 @@ class Api {
     this._token = token
   }
 
+_headerResponse = (res) => {
+  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+}
+
   getInfoUser() {
     return fetch(`${this._adress}/users/me`, {
       method: 'GET',
@@ -12,10 +16,7 @@ class Api {
         'Content-Type': 'application/json'
       }
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+      .then(this._headerResponse)
   }
 
   getInitialCards() {
@@ -25,14 +26,7 @@ class Api {
         'Content-Type': 'application/json'
       }
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._headerResponse)
   }
 
   patchEditProfile( name, about ) {
@@ -47,10 +41,7 @@ class Api {
         about
       })
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+    .then(this._headerResponse)
   }
 
   postAddNewCard({ name, link }) {
@@ -65,10 +56,7 @@ class Api {
         link
       })
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+    .then(this._headerResponse)
   }
 
   deleteCard( _id ) {
@@ -79,10 +67,7 @@ class Api {
         'Content-Type': 'application/json'
       },
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+    .then(this._headerResponse)
   }
 
   putHandlerLike( _id ) {
@@ -93,10 +78,7 @@ class Api {
         'Content-Type': 'application/json'
       },
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+    .then(this._headerResponse)
   }
 
   deleteLike( _id ) {
@@ -107,10 +89,7 @@ class Api {
         'Content-Type': 'application/json'
       },
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+    .then(this._headerResponse)
   }
 
   patchRefreshAvatar( link ) {
@@ -124,10 +103,7 @@ class Api {
         avatar: link
       })
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+    .then(this._headerResponse)
   }
 
 }
