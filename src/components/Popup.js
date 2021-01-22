@@ -29,9 +29,4 @@ export default class Popup {
         : null
     )
   }
-
-  handleBtnForm(textBtn) {
-    const btnForm = this._containerPopup.querySelector('.pop-up__form-btn-submit');
-    btnForm.textContent = textBtn;
-  }
 } 

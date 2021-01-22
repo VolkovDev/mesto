@@ -4,6 +4,10 @@ class Api {
     this._token = token
   }
 
+  _headerResponse = (res) => {
+    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getInfoUser() {
     return fetch(`${this._adress}/users/me`, {
       method: 'GET',
@@ -12,10 +16,7 @@ class Api {
         'Content-Type': 'application/json'
       }
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+      .then(this._headerResponse)
   }
 
   getInitialCards() {
@@ -25,17 +26,10 @@ class Api {
         'Content-Type': 'application/json'
       }
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(this._headerResponse)
   }
 
-  patchEditProfile( name, about ) {
+  patchEditProfile(name, about) {
     return fetch(`${this._adress}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -47,10 +41,7 @@ class Api {
         about
       })
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+      .then(this._headerResponse)
   }
 
   postAddNewCard({ name, link }) {
@@ -65,13 +56,10 @@ class Api {
         link
       })
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+      .then(this._headerResponse)
   }
 
-  deleteCard( _id ) {
+  deleteCard(_id) {
     return fetch(`${this._adress}/cards/${_id}`, {
       method: 'DELETE',
       headers: {
@@ -79,13 +67,10 @@ class Api {
         'Content-Type': 'application/json'
       },
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+      .then(this._headerResponse)
   }
 
-  putHandlerLike( _id ) {
+  putHandlerLike(_id) {
     return fetch(`${this._adress}/cards/likes/${_id}`, {
       method: 'PUT',
       headers: {
@@ -93,13 +78,10 @@ class Api {
         'Content-Type': 'application/json'
       },
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+      .then(this._headerResponse)
   }
 
-  deleteLike( _id ) {
+  deleteLike(_id) {
     return fetch(`${this._adress}/cards/likes/${_id}`, {
       method: 'DELETE',
       headers: {
@@ -107,13 +89,10 @@ class Api {
         'Content-Type': 'application/json'
       },
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+      .then(this._headerResponse)
   }
 
-  patchRefreshAvatar( link ) {
+  patchRefreshAvatar(link) {
     return fetch(`${this._adress}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -124,10 +103,7 @@ class Api {
         avatar: link
       })
     })
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject
-          (`Ошибка ${res.status}`))
+      .then(this._headerResponse)
   }
 
 }

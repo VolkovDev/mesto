@@ -33,14 +33,13 @@ const validationCustom = {
   submitButtonSelector: '.pop-up__form-btn-submit',
   inactiveButtonClass: 'pop-up__form-btn-submit_disabled',
   errorClass: 'pop-up__form-input_type_invalid',
-  inputErrorClass:'.pop-up__form-input-error'
+  inputErrorClass: '.pop-up__form-input-error'
 }
- 
+
 const selectorsConfig = {
   popUpAvatar: '.pop-up_type_avatar',
-  popUpFormAvatar: '.pop-up__form_avatar', 
+  popUpFormAvatar: '.pop-up__form_avatar',
   popUpConfirm: '.pop-up_type_confirm',
-  // popUpConfirmBtn: '.pop-up__form-btn_comfirm',
   popUpImageImgUtils: popUpImageImg,
   popUpImageDescriptionUtils: popUpImageDescription,
   closePopUpEscUtils: closePopUpEsc,
@@ -53,8 +52,6 @@ const selectorsConfig = {
   profileHobby: '.profile__hobby',
   popUpProfile: '.pop-up_type_profile',
   popUpAddCard: '.pop-up_type_add-card',
-  // popUpAddCardName: '.pop-up__form-input_type_image',
-  // popUpAddCardUrl: '.pop-up__form-input_type_url',
   popUpImageZoom: '.pop-up_type_image-zoom',
   cardImage: '.card__image',
   cardDeleteBtn: '.card__delete-btn',
@@ -64,6 +61,7 @@ const selectorsConfig = {
   cardDeleteBtnNonActive: 'card__delete-btn_non-active',
   listCard: '.cards',
   card: '#addCard',
+  userInfo: {}
   // initialCards: []
 }
 
@@ -83,55 +81,20 @@ validationInputAvatar.enableValidation()
 const popupWithImage = new PopupWithImage(selectorsConfig.popUpImageZoom)
 popupWithImage.setEventListeners()
 
-//PopUp удаления карточки
-const popupWithConfirm = new PopupWithConfirm(selectorsConfig.popUpConfirm, 
-    {
-    handleFormSubmit: () => {
-      popupWithConfirm.handleBtnForm('Удаление...');
-      }
-    }
-) 
-popupWithConfirm.setEventListeners();
-
 // Создание экземпляра класса с информацией о пользователе 
 const userInfo = new UserInfo({ selectorName: selectorsConfig.profileName, selectorAbout: selectorsConfig.profileHobby, selectorAvatar: selectorsConfig.profileAvatar })
-
-//Получение данных пользователя
-api.getInfoUser()
-.then((res) => {
-  console.log('dataUser: ', res)
-  userInfo.setUserInfo(res)
-})
-.catch(err => console.error('ошибка получения данных User: ', err))
-
-// Получение массива карточек
-  api.getInitialCards()
-    .then(result => {
-      console.log('addCardsUsers: ',result);
-      const sectionCard = new Section({
-        items: result,
-        renderer: (item) => {
-          const cardItem = createCard(item)
-          sectionCard.addItem(cardItem)
-        }
-      },
-        selectorsConfig.listCard)
-      sectionCard.renderer()
-
-  })
-  .catch(err => console.log('Ошибка при получении данных карточек', err))
 
 // Создание экземпляра класса формы профиля 
 const formProfile = new PopupWithForm(selectorsConfig.popUpProfile, {
   handleFormSubmit: (dataUser) => {
     formProfile.handleBtnForm('Сохранение...');
     api.patchEditProfile(dataUser['input-name'], dataUser['input-hobby'])
-    .then((data) => {
-      userInfo.setUserInfo(data)
-      validationInputImage.clearErrors()
-      formProfile.close()
-    })
-    .catch((err) => console.log(err));
+      .then((data) => {
+        userInfo.setUserInfo(data)
+        validationInputImage.clearErrors()
+        formProfile.close()
+      })
+      .catch((err) => console.log(err));
   }
 })
 formProfile.setEventListeners()
@@ -141,69 +104,85 @@ const formAvatar = new PopupWithForm(selectorsConfig.popUpAvatar, {
   handleFormSubmit: (dataUser) => {
     formAvatar.handleBtnForm('Сохранение...');
     api.patchRefreshAvatar(dataUser['input-avatar'])
-    .then(() => {
-      userInfo.setAvatar(
-        dataUser['input-avatar']
+      .then(() => {
+        userInfo.setAvatar(
+          dataUser['input-avatar']
         )
         validationInputAvatar.clearErrors()
         formAvatar.close()
-    })
+      })
 
-    .catch(err => console.log('getAvatar: ', err))
+      .catch(err => console.log('getAvatar: ', err))
   }
 })
 formAvatar.setEventListeners()
+
+// Получение данных User
+const infoUser = (user) => {
+  selectorsConfig.userInfo = user
+}
+
 
 // Создание экземпляра класса формы карты 
 const formAddCard = new PopupWithForm(selectorsConfig.popUpAddCard, {
   handleFormSubmit: () => {
     formAddCard.handleBtnForm('Сохранение...');
-    api.postAddNewCard({name:formImageTitle.value, link:formImageUrl.value})
-    .then((data) => {
-      console.log('данные отправки из формы карточки: ', data)
-    const sectionCard = new Section ({
-      items: data,
-      renderer: () => {}
-  }, selectorsConfig.listCard)
-  const cardItem = createCard(data)
-  sectionCard. prependItem(cardItem)
-    console.log('это карточка createCard: ', cardItem)
-  })
-  .catch(err => console.log('Ошибка при добавлении новой карточки: ', err))
-}
+    api.postAddNewCard({ name: formImageTitle.value, link: formImageUrl.value })
+      .then((data) => {
+        console.log('данные отправки из формы карточки: ', data)
+        const sectionCard = new Section({
+          items: data,
+          renderer: () => { }
+        }, selectorsConfig.listCard)
+        console.log('infoUser Index js: ', selectorsConfig.userInfo)
+        const cardItem = createCard(data, selectorsConfig.userInfo)
+        sectionCard.prependItem(cardItem)
+        formAddCard.close()
+        console.log('это карточка createCard: ', cardItem)
+      })
+      .catch(err => console.log('Ошибка при добавлении новой карточки: ', err))
+  }
 })
 formAddCard.setEventListeners()
 
+//PopUp удаления карточки
+const popupWithConfirm = new PopupWithConfirm(selectorsConfig.popUpConfirm, {
+  handleDeleteCard: ({ cardItem, cardId }) => {
+    console.log('element card index.JS: ', cardItem)
+    console.log('element card index.JS: ', cardId)
+    api.deleteCard(cardId)
+      .then(() => {
+        cardItem.remove()
+        popupWithConfirm.close()
+      })
+      .catch((err) => {
+        console.log('delete-Card-Fails: ', err);
+      })
+  }
+})
+popupWithConfirm.setEventListeners();
+
 
 // Создание экземпляра класса Card 
-function createCard(item) {
-  const card = new Card(item, {
+function createCard(itemCard, itemUser) {
+  const card = new Card(itemCard, itemUser, {
     handleCardClick: () => {
-      popupWithImage.open( item.link, item.name )
+      popupWithImage.open(itemCard.link, itemCard.name)
     },
-    handleBtnDelete: () => {
-      popupWithConfirm.open();
-      popupWithConfirm.handleBtn(function () {
-        api
-          .deleteCard(item._id)
-          .then(() => {
-            card.deleteCard();
-          })
-          .catch((err) => console.log(err));
-      });
-      popupWithConfirm.handleBtnForm('Да')
+    handleBtnDelete: ({ cardItem, cardId }) => {
+      popupWithConfirm.open({ cardItem, cardId })
     },
     handleBtnLike: () => {
-      if (!card.getElementLike().classList.contains(selectorsConfig.cardLikeBtnActive)) {
-        api.putHandlerLike(item._id)
+      if (card.getElementLike()) {
+        api.putHandlerLike(itemCard._id)
           .then((res) => {
-            console.log('get like: ', res )
+            console.log('get like: ', res)
             card.setLikes(res.likes);
             card.toggleLikeCard();
           })
           .catch((err) => console.log(err));
       } else {
-        api.deleteLike(item._id)
+        api.deleteLike(itemCard._id)
           .then((res) => {
             console.log('delete like : ', res)
             card.setLikes(res.likes);
@@ -214,14 +193,26 @@ function createCard(item) {
     },
   }, selectorsConfig)
   const cardItem = card.generateCard()
-  card.setLikes(item.likes);
+  card.setLikes(itemCard.likes);
   return cardItem
 }
 
-  Promise.all([api.getInitialCards(), api.getInfoUser()])
+Promise.all([api.getInitialCards(), api.getInfoUser()])
   .then((result) => {
-    userInfo.setUserInfo({name: result[1].name, about: result[1].about, avatar: result[1].avatar, _id: result[1]._id});
-    document.querySelector(selectorsConfig.profileAvatar).src = result[1].avatar;
+    userInfo.setUserInfo({ name: result[1].name, about: result[1].about, avatar: result[1].avatar, _id: result[1]._id });
+    console.log('addCardsUsers: ', result[0]);
+    console.log('getUserData: ', result[1])
+    const sectionCard = new Section({
+      items: result[0],
+      renderer: (item) => {
+        const cardItem = createCard(item, result[1])
+        sectionCard.addItem(cardItem)
+      }
+    },
+      selectorsConfig.listCard)
+    sectionCard.renderer()
+    infoUser(result[1])
+
     console.log('Промисы получены')
   })
   .catch((err) => console.log(err));
@@ -243,9 +234,9 @@ profileAddBtn.addEventListener('click', () => {
   formAddCard.handleBtnForm("Создать");
   validationInputImage.clearErrors()
   formAddCard.open()
-}) 
+})
 
-// Слушатель кнопки аватар
+// Слушатель - кнопки аватар
 avatarEdit.addEventListener("click", () => {
   formProfile.handleBtnForm("Сохранить");
   validationInputAvatar.clearErrors()

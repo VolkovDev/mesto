@@ -2,7 +2,7 @@ import Popup from './Popup.js';
 
 
 export default class PopupWithForm extends Popup {
-  constructor( containerPopupSelector, { handleFormSubmit } ) {
+  constructor(containerPopupSelector, { handleFormSubmit }) {
     super(containerPopupSelector)
     this._handleFormSubmit = handleFormSubmit;
     this._formItem = this._containerPopup.querySelector('.pop-up__form')
@@ -11,15 +11,15 @@ export default class PopupWithForm extends Popup {
 
   _getInputValues() {
     console.log(this._inputValues)
-    this._inputList =  
-    this._containerPopup
-    .querySelectorAll('.pop-up__form-input');
+    this._inputList =
+      this._containerPopup
+        .querySelectorAll('.pop-up__form-input');
     this._inputValues = {};
     this._inputList.forEach((input) => {
       this._inputValues[input.name] = input.value
     });
     return this._inputValues;
-    
+
   }
 
 
@@ -29,12 +29,16 @@ export default class PopupWithForm extends Popup {
       console.log('Сработал submit WithForm: ', e)
       e.preventDefault()
       this._handleFormSubmit(this._getInputValues())
-      this.close()
     })
   }
 
   close() {
     super.close()
     this._formItem.reset()
+  }
+
+  handleBtnForm(textBtn) {
+    const btnForm = this._containerPopup.querySelector('.pop-up__form-btn-submit');
+    btnForm.textContent = textBtn;
   }
 }
