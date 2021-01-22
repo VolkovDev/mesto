@@ -15,15 +15,15 @@ export class Card {
     this._cardImage = selectorsConfig.cardImage
     this._cardDeleteBtn = selectorsConfig.cardDeleteBtn
     this._cardLikeBtn = selectorsConfig.cardLikeBtn
-    this._handleCardClick = handleCardClick
-    this._handleCardClick = this._handleCardClick.bind(this);
-    this._handleBtnDelete = handleBtnDelete
     this._cardDeleteBtnNonActive = selectorsConfig.cardDeleteBtnNonActive
     this._cardLikeCounter = selectorsConfig.cardLikeCounter
     this._cardLikeBtnActive = selectorsConfig.cardLikeBtnActive
-    this._handleBtnDelete = handleBtnDelete.bind(this)
+    this._handleCardClick = handleCardClick
+    this._handleCardClick = this._handleCardClick.bind(this);
+    this._handleBtnDelete = handleBtnDelete
+    this._handleBtnDelete = this._handleBtnDelete.bind(this)
     this._handleBtnLike = handleBtnLike
-    this._handleBtnLike = handleBtnLike.bind(this)
+    this._handleBtnLike = this._handleBtnLike.bind(this)
   }
 
   // Получние контекста Template
@@ -36,26 +36,24 @@ export class Card {
     return cardElement
   }
 
-    // Создание экземпляра карточки
-    generateCard() {
-      console.log('this._idUserCard: ', this._idUserCard)
-      console.log('this._userInfoId: ', this._userInfoId)
-      this._element = this._getTemplate()
-      this._element.querySelector('.card__title').textContent = this._name
-      this._element.querySelector(this._cardImage).src = this._link
-      this._elementImage = this._element.querySelector(this._cardImage)
-      this._elementImage.alt = `На фотографии изображение ${this._name}`
-      this._elementLikeBtn = this._element.querySelector(this._cardLikeBtn)
-      this._elementLikeCounter = this._element.querySelector(this._cardLikeCounter)
-      this._setColorLike(this._userInfoId, this._likes);
-      this._elementDeleteBtn = this._element.querySelector('.card__delete-btn')
-      if (this._idUserCard !== this._userInfoId) {
-        this._elementDeleteBtn.classList.add(this._cardDeleteBtnNonActive)
-      }
-      this._setEventListeners()
-  
-      return this._element
+  // Создание экземпляра карточки
+  generateCard() {
+    this._element = this._getTemplate()
+    this._element.querySelector('.card__title').textContent = this._name
+    this._element.querySelector(this._cardImage).src = this._link
+    this._elementImage = this._element.querySelector(this._cardImage)
+    this._elementImage.alt = `На фотографии изображение ${this._name}`
+    this._elementLikeBtn = this._element.querySelector(this._cardLikeBtn)
+    this._elementLikeCounter = this._element.querySelector(this._cardLikeCounter)
+    this._setColorLike(this._userInfoId, this._likes);
+    this._elementDeleteBtn = this._element.querySelector('.card__delete-btn')
+    if (this._idUserCard !== this._userInfoId) {
+      this._elementDeleteBtn.classList.add(this._cardDeleteBtnNonActive)
     }
+    this._setEventListeners()
+
+    return this._element
+  }
 
   // Добавление слушателей событий
   _setEventListeners() {
@@ -63,14 +61,14 @@ export class Card {
       this._handleCardClick()
     })
     this._elementLikeBtn.addEventListener("click", this._handleBtnLike);
-    this._elementDeleteBtn.addEventListener("click", this._handleBtnDelete);
-    this._elementImage.addEventListener("click", this._handleCardClick);
-  }
-
-  //Удаление карточки из дома
-  deleteCard() {
-    this._element.remove()
-    this._element = null
+    this._elementDeleteBtn.addEventListener("click", () => {
+      this._handleBtnDelete({
+        cardItem: this._element,
+        cardId: this._id
+      })
+    }
+    )
+    this._elementImage.addEventListener("click", this._handleCardClick)
   }
 
   // Смена состояния лайка
@@ -101,7 +99,7 @@ export class Card {
       : null
   }
 
-  //Получить лайк
+  // Получить статус лайка
   getElementLike() {
     if (!this._elementLikeBtn.classList.contains(this._cardLikeBtnActive)) {
       return true

@@ -33,12 +33,12 @@ const validationCustom = {
   submitButtonSelector: '.pop-up__form-btn-submit',
   inactiveButtonClass: 'pop-up__form-btn-submit_disabled',
   errorClass: 'pop-up__form-input_type_invalid',
-  inputErrorClass:'.pop-up__form-input-error'
+  inputErrorClass: '.pop-up__form-input-error'
 }
- 
+
 const selectorsConfig = {
   popUpAvatar: '.pop-up_type_avatar',
-  popUpFormAvatar: '.pop-up__form_avatar', 
+  popUpFormAvatar: '.pop-up__form_avatar',
   popUpConfirm: '.pop-up_type_confirm',
   popUpImageImgUtils: popUpImageImg,
   popUpImageDescriptionUtils: popUpImageDescription,
@@ -81,10 +81,6 @@ validationInputAvatar.enableValidation()
 const popupWithImage = new PopupWithImage(selectorsConfig.popUpImageZoom)
 popupWithImage.setEventListeners()
 
-//PopUp удаления карточки
-const popupWithConfirm = new PopupWithConfirm(selectorsConfig.popUpConfirm) 
-popupWithConfirm.setEventListeners();
-
 // Создание экземпляра класса с информацией о пользователе 
 const userInfo = new UserInfo({ selectorName: selectorsConfig.profileName, selectorAbout: selectorsConfig.profileHobby, selectorAvatar: selectorsConfig.profileAvatar })
 
@@ -93,12 +89,12 @@ const formProfile = new PopupWithForm(selectorsConfig.popUpProfile, {
   handleFormSubmit: (dataUser) => {
     formProfile.handleBtnForm('Сохранение...');
     api.patchEditProfile(dataUser['input-name'], dataUser['input-hobby'])
-    .then((data) => {
-      userInfo.setUserInfo(data)
-      validationInputImage.clearErrors()
-      formProfile.close()
-    })
-    .catch((err) => console.log(err));
+      .then((data) => {
+        userInfo.setUserInfo(data)
+        validationInputImage.clearErrors()
+        formProfile.close()
+      })
+      .catch((err) => console.log(err));
   }
 })
 formProfile.setEventListeners()
@@ -108,70 +104,79 @@ const formAvatar = new PopupWithForm(selectorsConfig.popUpAvatar, {
   handleFormSubmit: (dataUser) => {
     formAvatar.handleBtnForm('Сохранение...');
     api.patchRefreshAvatar(dataUser['input-avatar'])
-    .then(() => {
-      userInfo.setAvatar(
-        dataUser['input-avatar']
+      .then(() => {
+        userInfo.setAvatar(
+          dataUser['input-avatar']
         )
         validationInputAvatar.clearErrors()
         formAvatar.close()
-    })
+      })
 
-    .catch(err => console.log('getAvatar: ', err))
+      .catch(err => console.log('getAvatar: ', err))
   }
 })
 formAvatar.setEventListeners()
 
 // Получение данных User
 const infoUser = (user) => {
- selectorsConfig.userInfo = user
-  }
+  selectorsConfig.userInfo = user
+}
 
 
 // Создание экземпляра класса формы карты 
 const formAddCard = new PopupWithForm(selectorsConfig.popUpAddCard, {
   handleFormSubmit: () => {
     formAddCard.handleBtnForm('Сохранение...');
-    api.postAddNewCard({name:formImageTitle.value, link:formImageUrl.value})
-    .then((data) => {
-      console.log('данные отправки из формы карточки: ', data)
-    const sectionCard = new Section ({
-      items: data,
-      renderer: () => {}
-  }, selectorsConfig.listCard)
-  console.log('infoUser Index js: ', selectorsConfig.userInfo)
-  const cardItem = createCard(data, selectorsConfig.userInfo)
-  sectionCard.prependItem(cardItem)
-  formAddCard.close()
-    console.log('это карточка createCard: ', cardItem)
-  })
-  .catch(err => console.log('Ошибка при добавлении новой карточки: ', err))
-}
+    api.postAddNewCard({ name: formImageTitle.value, link: formImageUrl.value })
+      .then((data) => {
+        console.log('данные отправки из формы карточки: ', data)
+        const sectionCard = new Section({
+          items: data,
+          renderer: () => { }
+        }, selectorsConfig.listCard)
+        console.log('infoUser Index js: ', selectorsConfig.userInfo)
+        const cardItem = createCard(data, selectorsConfig.userInfo)
+        sectionCard.prependItem(cardItem)
+        formAddCard.close()
+        console.log('это карточка createCard: ', cardItem)
+      })
+      .catch(err => console.log('Ошибка при добавлении новой карточки: ', err))
+  }
 })
 formAddCard.setEventListeners()
+
+//PopUp удаления карточки
+const popupWithConfirm = new PopupWithConfirm(selectorsConfig.popUpConfirm, {
+  handleDeleteCard: ({ cardItem, cardId }) => {
+    console.log('element card index.JS: ', cardItem)
+    console.log('element card index.JS: ', cardId)
+    api.deleteCard(cardId)
+      .then(() => {
+        cardItem.remove()
+        popupWithConfirm.close()
+      })
+      .catch((err) => {
+        console.log('delete-Card-Fails: ', err);
+      })
+  }
+})
+popupWithConfirm.setEventListeners();
 
 
 // Создание экземпляра класса Card 
 function createCard(itemCard, itemUser) {
   const card = new Card(itemCard, itemUser, {
     handleCardClick: () => {
-      popupWithImage.open( itemCard.link, itemCard.name )
+      popupWithImage.open(itemCard.link, itemCard.name)
     },
-    handleBtnDelete: () => {
-      popupWithConfirm.open();
-      popupWithConfirm.handleBtn(function () {
-        api
-          .deleteCard(itemCard._id)
-          .then(() => {
-            card.deleteCard();
-          })
-          .catch((err) => console.log(err));
-      });
+    handleBtnDelete: ({ cardItem, cardId }) => {
+      popupWithConfirm.open({ cardItem, cardId })
     },
     handleBtnLike: () => {
       if (card.getElementLike()) {
         api.putHandlerLike(itemCard._id)
           .then((res) => {
-            console.log('get like: ', res )
+            console.log('get like: ', res)
             card.setLikes(res.likes);
             card.toggleLikeCard();
           })
@@ -192,22 +197,21 @@ function createCard(itemCard, itemUser) {
   return cardItem
 }
 
-  Promise.all([api.getInitialCards(), api.getInfoUser()])
+Promise.all([api.getInitialCards(), api.getInfoUser()])
   .then((result) => {
-    userInfo.setUserInfo({name: result[1].name, about: result[1].about, avatar: result[1].avatar, _id: result[1]._id});
-    // document.querySelector(selectorsConfig.profileAvatar).src = result[1].avatar;
-      console.log('addCardsUsers: ',result[0]);
-      console.log('getUserData: ', result[1])
-      const sectionCard = new Section({
-        items: result[0],
-        renderer: (item) => {
-          const cardItem = createCard(item, result[1])
-          sectionCard.addItem(cardItem)
-        }
-      },
-        selectorsConfig.listCard)
-      sectionCard.renderer()
-      infoUser(result[1])
+    userInfo.setUserInfo({ name: result[1].name, about: result[1].about, avatar: result[1].avatar, _id: result[1]._id });
+    console.log('addCardsUsers: ', result[0]);
+    console.log('getUserData: ', result[1])
+    const sectionCard = new Section({
+      items: result[0],
+      renderer: (item) => {
+        const cardItem = createCard(item, result[1])
+        sectionCard.addItem(cardItem)
+      }
+    },
+      selectorsConfig.listCard)
+    sectionCard.renderer()
+    infoUser(result[1])
 
     console.log('Промисы получены')
   })
@@ -230,9 +234,9 @@ profileAddBtn.addEventListener('click', () => {
   formAddCard.handleBtnForm("Создать");
   validationInputImage.clearErrors()
   formAddCard.open()
-}) 
+})
 
-// Слушатель кнопки аватар
+// Слушатель - кнопки аватар
 avatarEdit.addEventListener("click", () => {
   formProfile.handleBtnForm("Сохранить");
   validationInputAvatar.clearErrors()

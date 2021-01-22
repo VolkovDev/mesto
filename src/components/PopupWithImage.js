@@ -9,7 +9,7 @@ export default class PopupWithImage extends Popup {
   }
 
   open(imageUrl, description) {
-    console.log('ссылка фото: ', imageUrl, 'подпись к фото: ', description )
+    console.log('ссылка фото: ', imageUrl, 'подпись к фото: ', description)
     super.open()
     this._cardImage.src = imageUrl
     this._cardImage.alt = description

@@ -4,9 +4,9 @@ class Api {
     this._token = token
   }
 
-_headerResponse = (res) => {
-  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
-}
+  _headerResponse = (res) => {
+    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  }
 
   getInfoUser() {
     return fetch(`${this._adress}/users/me`, {
@@ -26,10 +26,10 @@ _headerResponse = (res) => {
         'Content-Type': 'application/json'
       }
     })
-    .then(this._headerResponse)
+      .then(this._headerResponse)
   }
 
-  patchEditProfile( name, about ) {
+  patchEditProfile(name, about) {
     return fetch(`${this._adress}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -41,7 +41,7 @@ _headerResponse = (res) => {
         about
       })
     })
-    .then(this._headerResponse)
+      .then(this._headerResponse)
   }
 
   postAddNewCard({ name, link }) {
@@ -56,10 +56,10 @@ _headerResponse = (res) => {
         link
       })
     })
-    .then(this._headerResponse)
+      .then(this._headerResponse)
   }
 
-  deleteCard( _id ) {
+  deleteCard(_id) {
     return fetch(`${this._adress}/cards/${_id}`, {
       method: 'DELETE',
       headers: {
@@ -67,10 +67,10 @@ _headerResponse = (res) => {
         'Content-Type': 'application/json'
       },
     })
-    .then(this._headerResponse)
+      .then(this._headerResponse)
   }
 
-  putHandlerLike( _id ) {
+  putHandlerLike(_id) {
     return fetch(`${this._adress}/cards/likes/${_id}`, {
       method: 'PUT',
       headers: {
@@ -78,10 +78,10 @@ _headerResponse = (res) => {
         'Content-Type': 'application/json'
       },
     })
-    .then(this._headerResponse)
+      .then(this._headerResponse)
   }
 
-  deleteLike( _id ) {
+  deleteLike(_id) {
     return fetch(`${this._adress}/cards/likes/${_id}`, {
       method: 'DELETE',
       headers: {
@@ -89,10 +89,10 @@ _headerResponse = (res) => {
         'Content-Type': 'application/json'
       },
     })
-    .then(this._headerResponse)
+      .then(this._headerResponse)
   }
 
-  patchRefreshAvatar( link ) {
+  patchRefreshAvatar(link) {
     return fetch(`${this._adress}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -103,7 +103,7 @@ _headerResponse = (res) => {
         avatar: link
       })
     })
-    .then(this._headerResponse)
+      .then(this._headerResponse)
   }
 
 }
